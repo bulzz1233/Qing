@@ -62,9 +62,12 @@ const router = new VueRouter({
     ],
 });
 // 前置路由守卫
-// router.beforeEach((to,from,next)=>{
-
-// })
+    router.beforeEach((to,from,next)=>{
+        const token = localStorage.getItem('token')
+        if(to.name!=='login'&&to.name!=='mainpage'&&!token){
+            next({name:'login'})
+        }else next()
+    })
 // 后置路由守卫
 router.afterEach((to, from) => {
     document.title = to.meta.title || '轻运动，定制属于自己的健身计划';
