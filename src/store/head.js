@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default {
     name: 'headData',
-    
+    namespaced:true,
     //搜索的数据
     actions: {
         // 发送请求，获取搜索提示列表

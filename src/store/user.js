@@ -1,24 +1,23 @@
+import * as $api from '../api/index'
 export default {
     name: 'userData',
-    //日历的数据
+    namespaced:true,
     actions: {
-        // 发送请求，获取用户信息，返回token
-        // searchTips_list(context){
-        //     axios.get('').then(
-        //         response=>{
-        //             context.commit()
-        //         },
-        //         error =>{
-        //             alert(error.message)
-        //         }
-        //     )
-        // }
+        //发送请求，获取用户信息，返回token
+        ToLogin() {
+            $api.login.login().then(
+                response => {
+                    console.log(response);
+                },
+                error => {
+                    alert(error.message);
+                }
+            );
+        },
     },
     mutations: {},
     state: {
         // 待做事项
-        Ttest: [
-            
-        ]
-    }
-}
+        Ttest: [],
+    },
+};

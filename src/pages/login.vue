@@ -51,6 +51,7 @@
     </div>
 </template>
 <script>
+import axios from 'axios';
 export default {
     data() {
         var validateUser = (rule, value, callback) => {
@@ -91,6 +92,9 @@ export default {
 
             this.$refs[formName].validate(valid => {
                 if (valid) {
+                    let from = JSON.stringify(this.ruleForm)
+                    axios.get('/api/admin/AA')
+                    // this.$store.dispatch('userData/ToLogin')
                     alert('submit!');
                 } else {
                     console.log('error submit!!');

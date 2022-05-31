@@ -1,5 +1,6 @@
 export default {
     name: 'runData',
+    namespaced:true,
     //拓展下面的数据
     actions: {},
     mutations: {},

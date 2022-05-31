@@ -8,7 +8,8 @@ const router = new VueRouter({
         //     component:login
         // },
         //动态加载组件，以箭头函数形式
-        {
+        {   
+            
             path: '/mainpage',
             name: 'mainpage',
             component:()=>import('../components/mainpage.vue') ,
@@ -59,12 +60,17 @@ const router = new VueRouter({
                 },
             ],
         },
+        {
+            path: '/',
+            name: 'home',
+            component:()=>import('../components/home.vue') ,
+        }
     ],
 });
 // 前置路由守卫
     router.beforeEach((to,from,next)=>{
         const token = localStorage.getItem('token')
-        if(to.name!=='login'&&to.name!=='mainpage'&&!token){
+        if(to.name!=='login'&&to.name!=='mainpage'&&to.name!=='home'&&!token){
             next({name:'login'})
         }else next()
     })
