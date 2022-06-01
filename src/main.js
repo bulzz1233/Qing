@@ -8,6 +8,10 @@ import store from './store'
 import axios from 'axios';
 Vue.prototype.$axios = axios  
 Vue.config.productionTip = false
+//引入自定义组件
+import directive from './util/directives'
+//使用
+Vue.use(directive)
 Vue.use(Button)
 Vue.use(Carousel)
 Vue.use(Form)

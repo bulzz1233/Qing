@@ -2,7 +2,7 @@
     <!-- 轮播图 -->
     <div v-show='show'>
         <!-- 蒙版 -->
-        <div class="mask"></div>
+        <div  class="mask"></div>
 
         <div class="background"></div>
         <div class="content">

@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="card" >
         <ul class="card_layout">
             <li class="box">
                 <router-link
