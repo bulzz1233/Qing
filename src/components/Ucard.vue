@@ -7,7 +7,7 @@
                     :to="`/mainpage/details?detail=${JSON.stringify(o)}`"
                     class="img"
                 >
-                    <img src="../assets/img/a.jpg" width="100%" height="100%"  />
+                    <img v-lazyload="o.img" src="" width="100%" height="100%"  />
                 </router-link>
                 <div class="detail">
                     <router-link
@@ -28,6 +28,7 @@
                         </a>
                         <a
                             href="#"
+                            
                             @click.prevent="CancelStar(o, index)"
                             class="el-icon-star-on icon"
                             v-show="o.isStar"
@@ -51,7 +52,9 @@
 export default {
     name: 'Ucard',
     data() {
-        return {};
+        return {
+            imgdata:"a.jpg"
+        };
     },
     methods: {
         //收藏功能
@@ -72,6 +75,7 @@ export default {
                 star: o.star - 1,
                 isStar: !o.isStar,
             });
+            
         },
     },
     props: ['o'],

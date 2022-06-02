@@ -2,7 +2,7 @@
 
 const lazyload = {
     bind(el, binding){
-        el.binding=binding.value
+        
         //用来监听元素是否进入可视区域
         //var observer = new IntersectionObserver(callback,options);
         //callback是被监听元素的可见性变化时，触发的回调函数
@@ -12,7 +12,7 @@ const lazyload = {
                 entries.forEach((entry,index)=>{
                     let lazyImage = entry.target
                     if(entry.intersectionRatio>0){
-                        lazyImage.src = observer.binging.value
+                        lazyImage.src = require("@/assets/img/" + binding.value)
                         lazyloadObser.unobserve(lazyImage)
                     }
                 })

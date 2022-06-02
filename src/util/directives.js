@@ -1,7 +1,8 @@
 import lazyload from './lazyload'
-
+import debounce from './debounce'
 const directives={
     lazyload,
+    debounce
 }
 
 export default{

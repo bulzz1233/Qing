@@ -152,7 +152,7 @@ export default {
         // 向action提交请求，action在通过axios向服务器请求获得数据
         search_method() {
             this.search_show = !this.search_show;
-            this.$store.dispatch('Ttest');
+            this.$store.dispatch('headData/Ttest');
         },
         // 通过关键字搜索
         searchByKey(e) {
@@ -165,6 +165,7 @@ export default {
             if (this.search.trim().length != 0) {
                 this.tipsList_show = true;
                 this.tipsList = this.$store.state.headData.Ttest;
+                console.log('s')
             } else {
                 this.tipsList_show = false;
                 this.tipsList = [];

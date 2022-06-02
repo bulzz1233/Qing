@@ -9,7 +9,7 @@ export default {
             {
                 id: '001',
                 title: '篮球运球',
-                img: '2',
+                img: 'a.jpg',
                 describe:'这个运动的简介，这个运动的简介',
                 star: 5,
                 isStar: false,
@@ -18,7 +18,7 @@ export default {
                 id: '002',
                 title: '十分钟减脂操',
                 describe:'这个运动的简介，这个运动的简介',
-                img: '2',
+                img: 'b.jpg',
                 star: 6,
                 isStar: false,
             },
@@ -27,7 +27,7 @@ export default {
                 title: '这是第三段测试文字',
                 describe:'这个运动的简介，这个运动的简介',
 
-                img: '2',
+                img: 'a.jpg',
                 star: 7,
                 isStar: false,
             },
@@ -36,7 +36,7 @@ export default {
                 title: '这是第四段测试文字这是一段测试文字这是一段测试文字',
                 describe:'这个运动的简介，这个运动的简介',
 
-                img: '2',
+                img: 'b.jpg',
                 star: 8,
                 isStar: false,
             },
@@ -45,7 +45,7 @@ export default {
                 title: '这是第四测试文字这是一段测试文字这是一段测试文字',
                 describe:'这个运动的简介，这个运动的简介',
 
-                img: '2',
+                img: 'a.jpg',
                 star: 100,
                 isStar: false,
             },
@@ -54,7 +54,7 @@ export default {
                 title: '这是第五测试文字这是一段测试文字这是一段测试文字',
                 describe:'这个运动的简介，这个运动的简介',
 
-                img: '2',
+                img: 'b.jpg',
                 star: 100,
                 isStar: false,
             },
@@ -63,7 +63,7 @@ export default {
                 title: '这是第五测试文字这是一段测试文字这是一段测试文字',
                 describe:'这个运动的简介，这个运动的简介',
 
-                img: '2',
+                img: 'a.jpg',
                 star: 100,
                 isStar: false,
             },
@@ -72,7 +72,7 @@ export default {
                 title: '这是第五测试文字这是一段测试文字这是一段测试文字',
                 describe:'这个运动的简介，这个运动的简介',
 
-                img: '2',
+                img: 'b.jpg2',
                 star: 100,
                 isStar: false,
             },
