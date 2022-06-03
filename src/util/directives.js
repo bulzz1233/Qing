@@ -1,7 +1,9 @@
 import lazyload from './lazyload'
-import debounce from './debounce'
+import throttled from './throttled'
+import debounce  from './debounce'
 const directives={
     lazyload,
+    throttled,
     debounce
 }
 

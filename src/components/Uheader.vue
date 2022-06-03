@@ -31,7 +31,11 @@
                         v-focus
                         class="input_layout"
                         name="key"
-                        @input="tips_list"
+                        v-debounce="{
+                            fn:tips_list,
+                            type:'input'
+                        }"
+                        
                         @blur="search_show = !search_show"
                     >
                         <el-button
@@ -273,6 +277,7 @@ export default {
 .li_1 {
     position: relative;
     font-family: zhongwen1;
+    min-width:5.3125rem;
     font-size: 1.75rem;
     font-weight: bold;
     left: -0.625rem;
