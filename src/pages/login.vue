@@ -1,11 +1,16 @@
 <template>
-    <div class="layout_1" >
-        <div class="background" ></div>
+    <div class="layout_1">
+        <div class="background"></div>
         <div class="box">
             <div>
                 <div class="title_layout">
                     <h1 class="title">登&nbsp;&nbsp;&nbsp;&nbsp;录</h1>
-                    <router-link replace href="#"  class="el-icon-close icon close" to="/mainpage" ></router-link>
+                    <router-link
+                        replace
+                        href="#"
+                        class="el-icon-close icon close"
+                        to="/mainpage"
+                    ></router-link>
                 </div>
                 <div class="form_layout">
                     <el-form
@@ -32,10 +37,15 @@
                             ></el-input>
                         </el-form-item>
 
-
                         <el-form-item>
                             <div class="btn_layout">
-                                <el-button type="primary" v-debounce @click="submitForm('ruleForm')">
+                                <el-button
+                                    type="primary"
+                                    v-throttled="{
+                                        type:'click'
+                                    }"
+                                    @click="submitForm('ruleForm')"
+                                >
                                     登录
                                 </el-button>
                                 <el-button @click="resetForm('ruleForm')">重置</el-button>
@@ -43,7 +53,9 @@
                         </el-form-item>
                     </el-form>
                     <div class="tips_layout">
-                    <router-link replace class="register" to='/mainpage/register'>还没有账号？点击这里进行注册</router-link>
+                        <router-link replace class="register" to="/mainpage/register">
+                            还没有账号？点击这里进行注册
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -74,12 +86,11 @@ export default {
                 callback();
             }
         };
-        
+
         return {
             ruleForm: {
                 username: '',
                 pass: '',
-                
             },
             rules: {
                 username: [{ validator: validateUser, trigger: 'blur' }],
@@ -89,11 +100,10 @@ export default {
     },
     methods: {
         submitForm(formName) {
-
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    let from = JSON.stringify(this.ruleForm)
-                    axios.get('/api/admin/AA')
+                    let from = JSON.stringify(this.ruleForm);
+                    axios.get('/api/admin/AA');
                     // this.$store.dispatch('userData/ToLogin')
                     alert('submit!');
                 } else {
@@ -106,7 +116,6 @@ export default {
             this.$refs[formName].resetFields();
         },
     },
-
 };
 </script>
 
@@ -117,12 +126,12 @@ export default {
 
     font-size: 3.125rem;
 }
-.close{
+.close {
     position: relative;
-    left:6.25rem;
-    top:-0.9375rem;
+    left: 6.25rem;
+    top: -0.9375rem;
     text-decoration: none;
-    color:#0f0f0f;
+    color: #0f0f0f;
 }
 .layout_1 {
     position: fixed;
@@ -168,14 +177,12 @@ export default {
     display: flex;
     justify-content: space-between;
 }
-.tips_layout{
+.tips_layout {
     display: flex;
     justify-content: flex-end;
 }
-.register{
-    
+.register {
     color: #606266;
-    font-size: .8125rem;
+    font-size: 0.8125rem;
 }
-
 </style>
