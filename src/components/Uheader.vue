@@ -11,7 +11,7 @@
 
         <ul class="top-right">
             <transition name="left">
-                <li v-if="!search_show" class="download_layout" @click="show = !show">
+                <li v-show="!search_show" class="download_layout" @click="show = !show">
                     <a class="download" href="#" @click.prevent="">下载 APP</a>
                     <transition name="fade">
                         <div v-show="show" class="show_layout">
@@ -44,7 +44,7 @@
                             @mousedown.native="searchByKey"
                         ></el-button>
                     </el-input>
-                    <div class="search_tips" v-if="tipsList_show">
+                    <div class="search_tips" v-show="tipsList_show">
                         <ul class="tips_layout">
                             <li v-for="t in tipsList" :key="t.id">
                                 <div @mousedown="click_tips($event, t)" class="tips_list">
@@ -57,11 +57,11 @@
             </transition>
 
             <transition name="left1">
-                <div v-if="search_show" class="none"></div>
+                <div v-show="search_show" class="none"></div>
             </transition>
 
             <transition name="left">
-                <li v-if="!search_show" class="details_layout">
+                <li v-show="!search_show" class="details_layout">
                     <span @click="search_method">
                         <a class="el-icon-search layout_2" href="#">
                             <div class="layout_2">搜索</div>
@@ -169,7 +169,7 @@ export default {
             if (this.search.trim().length != 0) {
                 this.tipsList_show = true;
                 this.tipsList = this.$store.state.headData.Ttest;
-                console.log('s')
+                // console.log('s')
             } else {
                 this.tipsList_show = false;
                 this.tipsList = [];

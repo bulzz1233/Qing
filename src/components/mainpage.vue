@@ -9,8 +9,8 @@
             <router-view></router-view>
         </transition>
         <uheader />
-        <recommend v-if="this.$route.path.indexOf('more') ==-1"/>
-        <extension v-if="this.$route.path.indexOf('more') ==-1"/>
+        <recommend v-show="this.$route.path.indexOf('more') ==-1"/>
+        <extension v-show="this.$route.path.indexOf('more') ==-1"/>
     </div>
 </template>
 
