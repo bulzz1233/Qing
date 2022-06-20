@@ -136,7 +136,7 @@ export default {
                             interval: this.ruleForm.interval,
                             content: this.ruleForm.name,
                             reminder: this.ruleForm.reminder,
-                            done: 'flase',
+                            done: false,
                         };
                         this.$store.commit('calendarData/addTodoList', obj);
 

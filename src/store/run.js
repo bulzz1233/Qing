@@ -72,7 +72,7 @@ export default {
                 title: '这是第五测试文字这是一段测试文字这是一段测试文字',
                 describe:'这个运动的简介，这个运动的简介',
 
-                img: 'b.jpg2',
+                img: 'b.jpg',
                 star: 100,
                 isStar: false,
             },

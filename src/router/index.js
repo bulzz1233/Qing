@@ -27,6 +27,12 @@ const router = new VueRouter({
                     component:()=>import('../pages/login.vue'),
                 },
                 {
+                    path: 'user_plan',
+                    name: 'user_plan',
+                    meta: { title: '定制个性计划' },
+                    component:()=>import('../pages/plan_form.vue'),
+                },
+                {
                     path: 'plan',
                     name: 'plan',
                     meta: { title: '定制计划' },
@@ -58,6 +64,7 @@ const router = new VueRouter({
                     name: 'more',
                     component:()=>import('../pages/more.vue'),
                 },
+                
             ],
         },
         {
@@ -70,7 +77,7 @@ const router = new VueRouter({
 // 前置路由守卫
     router.beforeEach((to,from,next)=>{
         const token = localStorage.getItem('token')
-        if(to.name!=='login'&&to.name!=='mainpage'&&to.name!=='home'&&!token){
+        if(to.name!=='login'&&to.name!=='mainpage'&&to.name!=='home'&&to.name!=='register'&&!token){
             next({name:'login'})
         }else next()
     })

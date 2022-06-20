@@ -103,8 +103,8 @@ export default {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     let from = JSON.stringify(this.ruleForm);
-                    axios.get('/api/admin/AA');
-                    // this.$store.dispatch('userData/ToLogin')
+                    // axios.get('/api/admin/AA');
+                    this.$store.dispatch('userData/ToLogin')
                     alert('submit!');
                 } else {
                     console.log('error submit!!');
@@ -140,7 +140,7 @@ export default {
     width: 100%;
     height: 100%;
     align-items: center;
-    z-index: 3;
+    z-index: 10;
 }
 .background {
     background: #0f0f0f;

@@ -1,6 +1,7 @@
 <template>
     <div class="mainpage">
-        <el-backtop ></el-backtop>
+        <el-backtop class="toTop">
+        </el-backtop>
         <transition
             name="custom-classes-transition"
             enter-active-class="animate__animated animate__fadeIn"
@@ -9,8 +10,8 @@
             <router-view></router-view>
         </transition>
         <uheader />
-        <recommend v-show="this.$route.path.indexOf('more') ==-1"/>
-        <extension v-show="this.$route.path.indexOf('more') ==-1"/>
+        <recommend v-show="this.$route.path.indexOf('more') == -1" />
+        <extension v-show="this.$route.path.indexOf('more') == -1" />
     </div>
 </template>
 
@@ -29,9 +30,10 @@ export default {
 </script>
 
 <style scoped>
-
 .mainpage {
     position: relative;
 }
-
+.toTop{
+    box-shadow:4px 7px 5px rgb(111, 111, 111)
+}
 </style>

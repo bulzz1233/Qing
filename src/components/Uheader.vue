@@ -140,7 +140,7 @@ export default {
             // app二维码展示
             show: false,
             // 登录后显示
-            afterLogin_show: false,
+            afterLogin_show: true,
             // 搜索栏展示
             search_show: false,
             // 个人信息展示

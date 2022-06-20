@@ -1,5 +1,7 @@
 <template>
     <div class="form_layout">
+        <div class="mock"></div>
+        <div class="form_style">
         <el-form
             :model="ruleForm"
             :rules="rules"
@@ -22,7 +24,6 @@
                 <el-col :span="11">
                     <el-form-item prop="date">
                         <el-date-picker
-                            
                             v-model="ruleForm.date"
                             type="daterange"
                             align="right"
@@ -63,12 +64,12 @@
                 <el-button @click="resetForm('ruleForm')">重置</el-button>
             </el-form-item>
         </el-form>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'planform',
     data() {
         return {
             ruleForm: {
@@ -82,7 +83,7 @@ export default {
             },
             rules: {
                 region: [{ required: true, message: '请选择活动区域', trigger: 'change' }],
-                date: [{  required: true, message: '请选择日期', trigger: 'change' }],
+                date: [{ required: true, message: '请选择日期', trigger: 'change' }],
                 type: [
                     {
                         type: 'array',
@@ -148,9 +149,27 @@ export default {
 
 <style scoped>
 .form_layout {
-    position: relative;
-    top: 1.875rem;
-    left: 3.75rem;
-    overflow: scroll;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    
 }
+.mock{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: black;
+    opacity: .7;
+    z-index: 10;
+}
+.form_style{
+    height: 28.125rem;
+    width: 37.5rem;
+    background: white;
+    z-index: 10;
+    }
 </style>

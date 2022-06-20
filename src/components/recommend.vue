@@ -1,3 +1,5 @@
+/**备忘,登陆前向vuex的查询请求应该带上用户参数 */
+
 <template>
     <div class="Ubody">
         <div class="block">
@@ -11,12 +13,12 @@
         <!-- 日历 -->
         <div class="card">
             <Calendar class="calendar" :markDate="arr" v-on:choseDay="clickDay" />
-            <div class="tips btn_tips" v-show="afterLogin_show">
+            <div class="tips btn_tips" v-show="!afterLogin_show">
                 <el-button type="primary" class="btn_login" @click="goLogin">点击登录</el-button>
                 <div class="text">定制属于自己的健身计划</div>
             </div>
             <!-- 登录后展示 -->
-            <div class="todoList">
+            <div class="todoList" v-show="afterLogin_show">
                 <div class="head_title">今日计划</div>
                 <div class="finshed_layout">
                     <div class="finshed">
@@ -60,16 +62,16 @@ export default {
     },
     data() {
         return {
-            //登录后展示的信息
-            afterLogin_show: false,
+            //登录后展示的信息，应该根据是否有本地存储token来判断
+            afterLogin_show: true,
             // 被标记的日期
-            arr: [],
+            //arr: [],
             // 我的计划
             todoList_data: [],
             // 完成样式
             done_style: '',
             //获得日期
-            thisDate:''
+            thisDate: '',
         };
     },
     computed: {
@@ -79,6 +81,13 @@ export default {
                 if (todo.done) i++;
             });
             return i;
+        },
+        arr() {
+            let arr1 = [];
+            this.$store.state.calendarData.Ttest.forEach(list => {
+                arr1.push(list.date);
+            });
+            return arr1;
         },
     },
     methods: {
@@ -91,7 +100,7 @@ export default {
         //转到定制计划界面
         goplan() {
             this.$router.replace({
-                name: 'plan',
+                name: 'user_plan',
             });
         },
         //修改完成状态
@@ -99,9 +108,11 @@ export default {
             this.done_style = 'a';
             //修改、提交完成状态
             Vue.set(this.todoList_data[index], 'done', 'true');
+            //向后端发送请求完成修改
         },
         //点击日历日期
         clickDay(data) {
+            
             let chosedata = [];
             this.$store.state.calendarData.Ttest.forEach(list => {
                 if (list.date == data) {
@@ -112,8 +123,10 @@ export default {
             this.todoList_data = chosedata;
             // console.log(data);
         },
+        //删除按钮
         del(index) {
             this.todoList_data.splice(index, 1);
+            //向后端传值删除
         },
     },
     mounted() {
@@ -123,8 +136,8 @@ export default {
         // console.log(thisDate);
         //从仓库获取数据
         this.$store.state.calendarData.Ttest.forEach(list => {
-            this.arr.push(list.date);
-            if (list.date ==this.thisDate) {
+            //this.arr.push(list.date);
+            if (list.date == this.thisDate) {
                 this.todoList_data.push(list);
             }
         });
@@ -395,10 +408,10 @@ export default {
     /*border-radius: 0px;*/
     color: #ffffff;
 }
-.fade-enter-active {
-    transition: all ease-in-out 0.3s;
+.fade-enter-active,.fade-leave-active  {
+    transition: all ease-in-out 0.2s;
 }
-.fade-enter /* .fade-leave-active below version 2.1.8 */ {
+.fade-enter,.fade-leave{
     transform: translateY(-50%);
     opacity: 0;
 }

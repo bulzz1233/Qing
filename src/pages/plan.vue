@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import planform from '../components/plan_form.vue'
+import planform from './plan_form.vue'
 export default {
     components: { planform },
     data() {

@@ -141,7 +141,7 @@ export default {
 .layout_1 {
     position: fixed;
     display: flex;
-    z-index: 3;
+    z-index: 10;
     justify-content: center;
     width: 100%;
     height: 100%;
