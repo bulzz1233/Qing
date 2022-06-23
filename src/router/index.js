@@ -80,6 +80,15 @@ const router = new VueRouter({
         if(to.name!=='login'&&to.name!=='mainpage'&&to.name!=='home'&&to.name!=='register'&&!token){
             next({name:'login'})
         }else next()
+        if(token&&to.name=='login'||from.name=='login'&&to.name=='login'){
+            next({name:'mainpage'})
+        }else next()
+        if(token&&to.name=='register'){
+            next({name:'mainpage'})
+        }else next()
+        if(from.name!='login'&&to.name=='register'){
+            next({name:'login'})
+        }else next()
     })
 // 后置路由守卫
 router.afterEach((to, from) => {

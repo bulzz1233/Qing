@@ -5,7 +5,8 @@
             <div>
                 <div class="title_layout">
                     <h1 class="title">注&nbsp;&nbsp;&nbsp;&nbsp;册</h1>
-                    <router-link replace
+                    <router-link
+                        replace
                         href="#"
                         class="el-icon-close icon close"
                         to="/mainpage"
@@ -23,7 +24,7 @@
                         <el-form-item label="用户名" prop="username">
                             <el-input
                                 type="username"
-                                v-model="ruleForm.username"
+                                v-model="ruleForm.userName"
                                 autocomplete="off"
                             ></el-input>
                         </el-form-item>
@@ -31,7 +32,7 @@
                             <label slot="label">密&nbsp;&nbsp;&nbsp;&nbsp;码</label>
                             <el-input
                                 type="password"
-                                v-model="ruleForm.pass"
+                                v-model="ruleForm.userPassword"
                                 autocomplete="off"
                             ></el-input>
                         </el-form-item>
@@ -88,7 +89,7 @@ export default {
         var validatePass2 = (rule, value, callback) => {
             if (value === '') {
                 callback(new Error('请再次输入密码'));
-            } else if (value !== this.ruleForm.pass) {
+            } else if (value !== this.ruleForm.userPassword) {
                 callback(new Error('两次输入密码不一致!'));
             } else {
                 callback();
@@ -96,8 +97,8 @@ export default {
         };
         return {
             ruleForm: {
-                username: '',
-                pass: '',
+                userName: '',
+                userPassword: '',
                 checkPass: '',
             },
             rules: {
@@ -111,7 +112,7 @@ export default {
         submitForm(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    alert('submit!');
+                    this.$store.dispatch('userData/ToRegister', JSON.stringify(this.ruleForm));
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -182,13 +183,12 @@ export default {
     display: flex;
     justify-content: space-between;
 }
-.tips_layout{
+.tips_layout {
     display: flex;
     justify-content: flex-end;
 }
-.login{
-    
+.login {
     color: #606266;
-    font-size: .8125rem;
+    font-size: 0.8125rem;
 }
 </style>

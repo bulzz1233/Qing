@@ -21,18 +21,18 @@
                         label-width="6.25rem"
                         class="demo-ruleForm"
                     >
-                        <el-form-item label="用户名" prop="username">
+                        <el-form-item label="用户名" prop="userName">
                             <el-input
                                 type="username"
-                                v-model="ruleForm.username"
+                                v-model="ruleForm.userName"
                                 autocomplete="off"
                             ></el-input>
                         </el-form-item>
-                        <el-form-item label="密码" prop="pass">
+                        <el-form-item label="密码" prop="userPassword">
                             <label slot="label">密&nbsp;&nbsp;&nbsp;&nbsp;码</label>
                             <el-input
                                 type="password"
-                                v-model="ruleForm.pass"
+                                v-model="ruleForm.userPassword"
                                 autocomplete="off"
                             ></el-input>
                         </el-form-item>
@@ -42,8 +42,9 @@
                                 <el-button
                                     type="primary"
                                     v-throttled="{
-                                        type:'click'
+                                        type: 'click',
                                     }"
+                                    
                                     @click="submitForm('ruleForm')"
                                 >
                                     登录
@@ -63,6 +64,7 @@
     </div>
 </template>
 <script>
+
 import axios from 'axios';
 export default {
     data() {
@@ -70,9 +72,6 @@ export default {
             if (value === '') {
                 callback(new Error('请输入用户名'));
             } else {
-                if (this.ruleForm.checkPass !== '') {
-                    this.$refs.ruleForm.validateField('checkUser');
-                }
                 callback();
             }
         };
@@ -80,32 +79,41 @@ export default {
             if (value === '') {
                 callback(new Error('请输入密码'));
             } else {
-                if (this.ruleForm.checkPass !== '') {
-                    this.$refs.ruleForm.validateField('checkPass');
-                }
                 callback();
             }
         };
 
         return {
             ruleForm: {
-                username: '',
-                pass: '',
+                userName: '',
+                userPassword: '',
             },
             rules: {
-                username: [{ validator: validateUser, trigger: 'blur' }],
-                pass: [{ validator: validatePass, trigger: 'blur' }],
+                userName: [{ validator: validateUser, trigger: 'blur' }],
+                userPassword: [{ validator: validatePass, trigger: 'blur' }],
             },
         };
     },
+ 
+    
     methods: {
         submitForm(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                    let from = JSON.stringify(this.ruleForm);
+                    //let from = JSON.stringify(this.ruleForm);
                     // axios.get('/api/admin/AA');
-                    this.$store.dispatch('userData/ToLogin')
-                    alert('submit!');
+
+                    this.$store.dispatch('userData/ToLogin', JSON.stringify(this.ruleForm));
+                    
+                    
+                        
+                    // setInterval(()=>{
+                    //     const token = localStorage.getItem('token')
+                    //     if(token){window.location.reload()}
+                        
+                    // },1000) 
+                    
+                    
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -115,7 +123,11 @@ export default {
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
+
     },
+
+
+
 };
 </script>
 

@@ -185,6 +185,15 @@ export default {
             this.tipsList = [];
         },
     },
+    mounted(){
+        //判断是否有token
+        if(localStorage.getItem('token')!=null){
+            //传回后端判断后端，
+            this.afterLogin_show=false
+            
+        }
+    },
+    
     // 自定义指令
     directives: {
         focus: {

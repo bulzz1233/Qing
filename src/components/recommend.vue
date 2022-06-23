@@ -63,7 +63,7 @@ export default {
     data() {
         return {
             //登录后展示的信息，应该根据是否有本地存储token来判断
-            afterLogin_show: true,
+            afterLogin_show: false,
             // 被标记的日期
             //arr: [],
             // 我的计划
@@ -146,6 +146,11 @@ export default {
         //获取
 
         //判断是否有用户登录
+            if(localStorage.getItem('token')!=null){
+            //传回后端判断后端，
+            this.afterLogin_show=true
+            
+        }
     },
 };
 </script>

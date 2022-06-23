@@ -1,10 +1,9 @@
 import request from '@/util/request';
 
-export function login(parms) {
+export function register(parms) {
     return request({
         method: 'POST',
-        url: '/user/login',
+        url: '/user/register',
         data:parms
-        
     });
 }
