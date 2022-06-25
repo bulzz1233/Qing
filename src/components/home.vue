@@ -1,12 +1,11 @@
 <template>
-    <!-- 轮播图 -->
-    <div v-show='show'>
-        <!-- 蒙版 -->
-        <div  class="mask"></div>
+    <div class="style" v-show='show'>
+        
+        <div class="mask"></div>
 
         <div class="background"></div>
         <div class="content">
-                <!-- <h1 class="animate__animated animate__bounce" >hhhh</h1> -->
+            
             <transition
                 enter-active-class="animate__zoomInDown"
                 appear
@@ -15,7 +14,7 @@
                     <li class="title "
                         
                         >轻运动</li>
-                    <li class="Etitle" >Light Exercise</li>
+                    <li class="Etitle">Light Exercise</li>
                     <li class="details">定制属于自己的健身计划</li>
                 </ul>
             </transition>
@@ -32,6 +31,7 @@
         </el-carousel>
         
     </div>
+
 </template>
 
 <script>
@@ -62,6 +62,7 @@ export default {
         window.addEventListener('resize', () => {
             this.main_height = document.body.clientHeight;
         });
+        
     },
 };
 </script>
@@ -100,6 +101,10 @@ export default {
 
     margin-bottom: 4.25rem;
     color: rgb(233, 242, 248);
+}
+.style{
+    overflow-x: hidden;
+    
 }
 .title {
     font-family: 'zhongwen1';

@@ -2,8 +2,32 @@ export default {
     name: 'runData',
     namespaced:true,
     //拓展下面的数据
-    actions: {},
-    mutations: {},
+    actions: {
+        SearchByFit(context, value) {
+            // console.log(value);
+
+            $api.searchByFit.searchByFit(value).then(
+                result => {
+                    
+                    context.commit(`add+value.sport`, result.data);
+                },
+                error => {
+                    console.log(error.message);
+                }
+            );
+        },
+    },
+    mutations: {
+        addyoung(){
+
+        },
+        addmid(){
+
+        },
+        addold(){
+            
+        }
+    },
     state: {
         Ttest: [
             {

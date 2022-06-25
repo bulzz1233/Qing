@@ -6,7 +6,7 @@ const request = axios.create({
     baseURL: '/api',
     timeout: 5000,
 });
-
+//请求拦截器
 request.interceptors.request.use((config)=>{
     //获得token放到请求头
     const token = localStorage.getItem('token')

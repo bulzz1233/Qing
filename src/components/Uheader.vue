@@ -5,7 +5,7 @@
             <li class="li_1">轻运动</li>
             <li><router-link replace to="/mainpage">首页</router-link></li>
             <li v-for="(t, index) in head_list" :key="index">
-                <router-link replace :to="`/mainpage/more?title=${t}`">{{t}}</router-link>
+                <router-link replace :to="`/mainpage/more?title=${t}`">{{ t }}</router-link>
             </li>
         </ul>
 
@@ -32,10 +32,9 @@
                         class="input_layout"
                         name="key"
                         v-debounce="{
-                            fn:tips_list,
-                            type:'input'
+                            fn: tips_list,
+                            type: 'input',
                         }"
-                        
                         @blur="search_show = !search_show"
                     >
                         <el-button
@@ -46,9 +45,9 @@
                     </el-input>
                     <div class="search_tips" v-show="tipsList_show">
                         <ul class="tips_layout">
-                            <li v-for="t in tipsList" :key="t.id">
+                            <li v-for="(t, index) in Tips" :key="index">
                                 <div @mousedown="click_tips($event, t)" class="tips_list">
-                                    {{ t.title }}
+                                    {{ t.sportName }}
                                 </div>
                             </li>
                         </ul>
@@ -98,7 +97,9 @@
                             @mouseenter="a = 'portrait_style'"
                             @mouseleave="a = ''"
                         >
-                            <center><div class="username">用户名</div></center>
+                            <center>
+                                <div class="username">{{ user_name }}</div>
+                            </center>
                             <div class="box">
                                 <a class="meum_layout" href="">
                                     <span class="el-icon-star-off icon"></span>
@@ -117,8 +118,8 @@
                                     <span>编辑资料</span>
                                 </a>
                             </div>
-                            <div class="box">
-                                <a class="meum_layout" href="">
+                            <div class="box" @click="outLogin">
+                                <a class="meum_layout" href="javascript:;">
                                     <span class="el-icon-switch-button icon"></span>
                                     <span>退出登录</span>
                                 </a>
@@ -132,6 +133,7 @@
     </div>
 </template>
 <script>
+import { parse } from 'qs';
 export default {
     name: 'Uheader',
     data() {
@@ -149,14 +151,26 @@ export default {
             tipsList_show: false,
             search: '',
             a: '',
-            tipsList: [],
+            user_name: '',
         };
     },
+    computed: {
+        Tips() {
+            let arr1 = [];
+            if (this.$store.state.headData.Tips_list) {
+
+                arr1= this.$store.state.headData.Tips_list
+                }
+            return arr1;
+        }
+            },
+
+
+    
     methods: {
         // 向action提交请求，action在通过axios向服务器请求获得数据
         search_method() {
             this.search_show = !this.search_show;
-            this.$store.dispatch('headData/Ttest');
         },
         // 通过关键字搜索
         searchByKey(e) {
@@ -167,33 +181,55 @@ export default {
         // 搜索提示
         tips_list() {
             if (this.search.trim().length != 0) {
+                let obj = {
+                    search: this.search,
+                };
+                this.$store.dispatch('headData/searchTips_list', JSON.stringify(obj));
                 this.tipsList_show = true;
-                this.tipsList = this.$store.state.headData.Ttest;
                 // console.log('s')
             } else {
                 this.tipsList_show = false;
-                this.tipsList = [];
+                // this.tipsList = [];
             }
         },
         //点击提示
         click_tips(e, key) {
             e.preventDefault();
-            this.search = key.title;
+            this.search = key.sportName;
             //搜索
 
             this.tipsList_show = false;
-            this.tipsList = [];
-        },
-    },
-    mounted(){
-        //判断是否有token
-        if(localStorage.getItem('token')!=null){
-            //传回后端判断后端，
-            this.afterLogin_show=false
             
+        },
+        //退出登录
+        outLogin(){
+            this.$confirm('确认要退出登录吗？', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning',
+            })
+                .then(() => {
+                    localStorage.removeItem("user_data")
+                    localStorage.removeItem("token")
+                    window.location.reload()
+                })
+                .catch(() => {
+                    
+                });
         }
     },
-    
+    mounted() {
+        //判断是否有token
+        if (localStorage.getItem('token') != null) {
+            //传回后端判断后端，
+            this.afterLogin_show = false;
+        }
+        if (localStorage.getItem('user_data')) {
+            let i = JSON.parse(localStorage.getItem('user_data')).userName;
+            this.user_name = i;
+        }
+    },
+
     // 自定义指令
     directives: {
         focus: {
@@ -286,7 +322,7 @@ export default {
 .li_1 {
     position: relative;
     font-family: zhongwen1;
-    min-width:5.3125rem;
+    min-width: 5.3125rem;
     font-size: 1.75rem;
     font-weight: bold;
     left: -0.625rem;

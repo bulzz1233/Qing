@@ -69,6 +69,10 @@ export default {
             })
         }
     },
+    beforeCreate(){
+        this.$store.dispatch("runData/All")
+
+    },
     mounted() {
         this.extension_data = this.$store.state.runData.Ttest;
     },

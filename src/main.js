@@ -34,6 +34,7 @@ Vue.use(RadioGroup)
 Vue.use(CheckboxGroup)
 Vue.use(Loading)
 Vue.component(MessageBox.name,MessageBox)
+Vue.prototype.$confirm = MessageBox.confirm
 // Vue.use(axios)
 new Vue({
   render: h => h(App),

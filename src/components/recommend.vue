@@ -4,15 +4,15 @@
     <div class="Ubody">
         <div class="block">
             <el-carousel height="25.5rem" class="carousel">
-                <el-carousel-item v-for="item in 4" :key="item">
-                    <h3 class="small">{{ item }}</h3>
+                <el-carousel-item v-for="item in ImgUrl" :key="item">
+                    <img class="img1" :src="require('../assets/' + item)" />
                 </el-carousel-item>
             </el-carousel>
         </div>
         <div class="none"></div>
         <!-- 日历 -->
         <div class="card">
-            <Calendar class="calendar" :markDate="arr" v-on:choseDay="clickDay" />
+            <Calendar class="calendar" :markDate="mark_arr" v-on:choseDay="clickDay" />
             <div class="tips btn_tips" v-show="!afterLogin_show">
                 <el-button type="primary" class="btn_login" @click="goLogin">点击登录</el-button>
                 <div class="text">定制属于自己的健身计划</div>
@@ -22,25 +22,27 @@
                 <div class="head_title">今日计划</div>
                 <div class="finshed_layout">
                     <div class="finshed">
-                        已完成&nbsp;&nbsp;{{ doneTotal }}&nbsp;/&nbsp;{{ todoList_data.length }}
+                        已完成&nbsp;&nbsp;{{ doneTotal }}&nbsp;/&nbsp;{{ list.length }}
                     </div>
                 </div>
                 <div class="card_layout">
                     <div
                         class="list_card"
                         :class="done_style"
-                        v-for="(t, index) in todoList_data"
-                        :key="index"
+                        v-for="(t, index) in list"
+                        :key="t.planId"
                     >
-                        <div class="content" :class="t.done">{{ t.content }}</div>
-                        <div class="btn_layout" v-show="!t.done">
-                            <div class="icon check" @click="bedone(index)">✔️</div>
-                            <div class="icon del" @click="del(index)">❌</div>
+                        <div class="content" :class="(t.planDone)?'true':'false'" @click="toStudy(t)" >{{ t.planContent }}</div>
+                        <div class="btn_layout" v-show="!t.planDone">
+                            <div class="icon check" @click="bedone(t, index)">✔️</div>
+                            <div class="icon del" @click="del(t.planId, index)">❌</div>
                         </div>
                         <transition name="fade">
-                            <div class="done text" v-show="t.done">已完成</div>
+                            <div class="done text" v-show="t.planDone">已完成</div>
                         </transition>
                     </div>
+                    <div class="todotips" v-show="todotips_show">今日还没有训练计划过，快去添加吧</div>
+                    <div class="todotips" v-show="finsh_show">✅打卡成功，已完成打卡天</div>
                     <div class="null"></div>
                 </div>
                 <div class="coustomized">
@@ -55,6 +57,7 @@
 <script>
 import Calendar from 'vue-calendar-component';
 import Vue from 'vue';
+import { MessageBox } from 'element-ui';
 export default {
     name: 'recommend',
     components: {
@@ -64,31 +67,83 @@ export default {
         return {
             //登录后展示的信息，应该根据是否有本地存储token来判断
             afterLogin_show: false,
+            ImgUrl: [`img/a.jpg`, `img/b.jpg`],
+            uid:'',
             // 被标记的日期
             //arr: [],
             // 我的计划
-            todoList_data: [],
+            list: [],
+            mark_arr: [],
             // 完成样式
             done_style: '',
             //获得日期
             thisDate: '',
+            finsh_show:false
+            
         };
     },
     computed: {
         doneTotal() {
             let i = 0;
-            this.todoList_data.forEach(todo => {
-                if (todo.done) i++;
-            });
+            if (this.todoList_data) {
+                this.todoList_data.forEach(todo => {
+                    if (todo.planDone) i++;
+                });
+            }
             return i;
         },
         arr() {
-            let arr1 = [];
-            this.$store.state.calendarData.Ttest.forEach(list => {
-                arr1.push(list.date);
+            var arr1 = [];
+
+            this.$store.state.calendarData.Plan.forEach(item => {
+                arr1.push(item.planDate);
             });
+
             return arr1;
         },
+        todoList_data() {
+            let arr = [];
+            if (this.$store.state.calendarData.Plan) {
+                this.$store.state.calendarData.Plan.forEach(list => {
+                    //this.arr.push(list.date);
+                    if (list.planDate == this.thisDate) {
+                        arr.push(list);
+                    }
+                });
+            }
+            return arr;
+        },
+        todotips_show(){
+            if(this.list.length==0){
+                return true;
+            }else return false
+        },
+
+    },
+    watch: {
+        arr: {
+            deep: true,
+            handler(newArry, oldArry) {
+                this.mark_arr = newArry;
+            },
+        },
+        todoList_data: {
+            deep: true,
+            handler(newArry, oldArry) {
+                this.list = newArry;
+            },
+        },
+        list:{
+            deep:true,
+            handler(newArry,oldArry){
+                if(newArry.length==this.doneTotal){
+                    this.finsh_show=true
+                }else{
+                    this.finsh_show=false
+                }
+            }
+        }
+        
     },
     methods: {
         //转到登录界面
@@ -104,29 +159,51 @@ export default {
             });
         },
         //修改完成状态
-        bedone(index) {
+        bedone(t, index) {
             this.done_style = 'a';
             //修改、提交完成状态
-            Vue.set(this.todoList_data[index], 'done', 'true');
             //向后端发送请求完成修改
+            
+                    let obj = {
+                        pid: t.planId,
+                        usrId:t.usrId,
+                        planDate:t.planDate,
+                        planInterval:t.planInterval,
+                        planContent:t.planContent,
+                        planReminder:t.planReminder,
+                        planDone:false
+                    };
+                    this.$store.dispatch('calendarData/UpdatePlan', JSON.stringify(obj));
+                    Vue.set(this.list[index], 'planDone', 'true');
+                    if(this.doneTotal==this.list.length){
+                        MessageBox.alert("恭喜完成今日打卡")
+                        this.finsh_show=true
+                    }
+
         },
         //点击日历日期
         clickDay(data) {
-            
-            let chosedata = [];
-            this.$store.state.calendarData.Ttest.forEach(list => {
-                if (list.date == data) {
-                    chosedata.push(list);
-                }
-                return chosedata;
-            });
-            this.todoList_data = chosedata;
+            this.thisDate = data;
+            this.list = this.todoList_data;
             // console.log(data);
         },
         //删除按钮
-        del(index) {
-            this.todoList_data.splice(index, 1);
+        del(id, index) {
+            // this.list.splice(index, 1);
             //向后端传值删除
+            this.$confirm('确认要删除吗？', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'error',
+            })
+                .then(() => {
+                    let obj = {
+                        pid: id,
+                    };
+                    this.$store.dispatch('calendarData/DelPlan', JSON.stringify(obj));
+                    this.list.splice(index, 1);
+                })
+                .catch(() => {});
         },
     },
     mounted() {
@@ -135,22 +212,26 @@ export default {
         this.thisDate = Tdate.getFullYear() + '/' + (Tdate.getMonth() + 1) + '/' + Tdate.getDate();
         // console.log(thisDate);
         //从仓库获取数据
-        this.$store.state.calendarData.Ttest.forEach(list => {
-            //this.arr.push(list.date);
-            if (list.date == this.thisDate) {
-                this.todoList_data.push(list);
-            }
-        });
-
+        // setTimeout(() => {
+        //     this.list = this.todoList_data;
+        // }, 500);
         // this.todoList_data = ;
         //获取
-
-        //判断是否有用户登录
-            if(localStorage.getItem('token')!=null){
-            //传回后端判断后端，
-            this.afterLogin_show=true
-            
+        if (localStorage.getItem('user_data')) {
+            this.uid = JSON.parse(localStorage.getItem('user_data')).uid;
         }
+        //判断是否有用户登录
+        if (localStorage.getItem('token') != null) {
+            this.afterLogin_show = true;
+        }
+        if (localStorage.getItem('user_data')) {
+            let i = JSON.parse(localStorage.getItem('user_data')).uid;
+            let planobj = {
+                uid: i,
+            };
+            this.$store.dispatch('calendarData/AllPlan', JSON.stringify(planobj));
+        }
+
     },
 };
 </script>
@@ -187,7 +268,10 @@ export default {
     z-index: 1;
     border-radius: 5px;
 }
-
+.img1 {
+    width: 120%;
+    height: 100%;
+}
 .card_layout {
     position: relative;
     overflow: scroll;
@@ -240,6 +324,15 @@ export default {
     color: #7b7a7a;
     cursor: default;
     text-decoration: line-through;
+}
+.todotips{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top:1rem;
+    color: #7b7a7a;
+    font-size: 12px;
+
 }
 .btn_layout {
     display: flex;
@@ -413,10 +506,12 @@ export default {
     /*border-radius: 0px;*/
     color: #ffffff;
 }
-.fade-enter-active,.fade-leave-active  {
+.fade-enter-active,
+.fade-leave-active {
     transition: all ease-in-out 0.2s;
 }
-.fade-enter,.fade-leave{
+.fade-enter,
+.fade-leave {
     transform: translateY(-50%);
     opacity: 0;
 }

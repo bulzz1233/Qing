@@ -5,7 +5,7 @@ const debounce ={
         let timer;
         let{fn,type,delay} = binding.value 
         if(!delay){
-            delay=500
+            delay=300
         }
         el.addEventListener(type,()=>{
             if(timer){

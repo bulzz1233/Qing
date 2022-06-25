@@ -69,6 +69,7 @@
 </template>
 
 <script>
+
 export default {
     data() {
         return {
@@ -78,7 +79,10 @@ export default {
                 date: '',
                 interval: '',
                 reminder: false,
+                uid:'',
             },
+
+
             rules: {
                 date: [{ required: true, message: '请选择日期', trigger: 'change' }],
                 interval: [{ required: true, message: '请选择运动间隔', trigger: 'change' }],
@@ -116,6 +120,10 @@ export default {
             },
         };
     },
+    computed:{
+
+    },
+
     methods: {
         submitForm(formName) {
             this.$refs[formName].validate(valid => {
@@ -125,19 +133,22 @@ export default {
                     var startTime = this.ruleForm.date[0];
                     var endTime = this.ruleForm.date[1];
                     //计算出中间的日期
+                    var Chang =[];
                     while (endTime - startTime >= 0) {
                         var year = startTime.getFullYear();
                         var month = startTime.getMonth() + 1;
                         var day = startTime.getDate();
                         // alert(year + '-' + month + '-' + day);
                         var obj = {
-                            username: 'a',
-                            date: year + '/' + month + '/' + day,
-                            interval: this.ruleForm.interval,
-                            content: this.ruleForm.name,
-                            reminder: this.ruleForm.reminder,
-                            done: false,
+                            userId: this.uid,
+                            sportName:this.ruleForm.name,
+                            planDate: year + '/' + month + '/' + day,
+                            planInterval: this.ruleForm.interval,
+                            planContent: this.ruleForm.name,
+                            planReminder: this.ruleForm.reminder,
+                            planDone:false,
                         };
+                        Chang.push(obj)
                         this.$store.commit('calendarData/addTodoList', obj);
 
                         startTime.setDate(
@@ -145,6 +156,10 @@ export default {
                         );
                         // console.log(year + '/' + month + '/' + day);
                     }
+                    let listobj={list:Chang}
+                    //console.log(listobj)
+                    //console.log(JSON.stringify(listobj))
+                    this.$store.dispatch('calendarData/ToAddPlan',JSON.stringify(listobj) )
                     this.$router.replace({
                         name: 'mainpage',
                     });
@@ -158,6 +173,13 @@ export default {
             this.$refs[formName].resetFields();
         },
     },
+    mounted(){
+        if(localStorage.getItem("user_data")){
+
+            this.uid =JSON.parse(localStorage.getItem("user_data")).uid
+            
+        }
+    }
 };
 </script>
 
