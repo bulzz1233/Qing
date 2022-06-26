@@ -3,6 +3,7 @@ import App from './App.vue'
 import {Button,Carousel,CarouselItem,Form,FormItem,Input,Icon,Backtop,Select,DatePicker,Switch,Checkbox,Radio,Row,Col,Option,RadioGroup,CheckboxGroup,Loading,MessageBox,} from 'element-ui'
 import './assets/css/index.css'
 import VueRouter from 'vue-router'
+import video from 'video.js'
 import router from './router'
 import store from './store'
 import axios from 'axios';
@@ -11,6 +12,8 @@ Vue.config.productionTip = false
 // Vue.prototype.$alert = MessageBox.alert
 //引入自定义组件
 import directive from './util/directives'
+import 'video.js/dist/video-js.css'
+// require('vue-video-player/dist/')
 //使用
 Vue.use(directive)
 Vue.use(Button)
@@ -34,6 +37,7 @@ Vue.use(RadioGroup)
 Vue.use(CheckboxGroup)
 Vue.use(Loading)
 Vue.component(MessageBox.name,MessageBox)
+Vue.prototype.$video = video
 Vue.prototype.$confirm = MessageBox.confirm
 // Vue.use(axios)
 new Vue({

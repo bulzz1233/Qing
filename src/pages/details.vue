@@ -2,8 +2,8 @@
     <div class="details_layout">
         <div class="background"></div>
         <div class="box">
-            <div class="left">
-                <ul class="ul_layout">
+            <div class="left" :class="left_width">
+                <ul v-show="btn_show1" class="ul_layout">
                     <li class="detail">详情</li>
                     <li class="li_layout" @click="show1">
                         <router-link
@@ -23,7 +23,7 @@
                             定制计划
                         </router-link>
                     </li> -->
-                    <li class="li_layout" @click="show3()">
+                    <li class="li_layout"  @click="show3()">
                         <router-link
                             class="link"
                             replace
@@ -63,7 +63,7 @@
                     </div>
                     <div class="right_bottom">
                         <div class="title">
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ params.title }}
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ params.sportIntroduce }}
                         </div>
                     </div>
                 </div>
@@ -81,6 +81,7 @@ export default {
             show: true,
             // btn_show: true,
             btn_show1: true,
+            left_width:'a'
         };
     },
     methods: {
@@ -111,6 +112,7 @@ export default {
             });
         },
         gostudy() {
+            this.left_width="b"
             this.show = false;
             this.btn_show = false;
             this.btn_show1 = false;
@@ -135,7 +137,7 @@ export default {
     width: 100%;
     height: 100%;
     align-items: center;
-    z-index: 5;
+    z-index: 10;
 }
 .background {
     background: #0f0f0f;
@@ -145,6 +147,14 @@ export default {
 
     opacity: 0.4;
     color: rgb(255, 255, 255);
+}
+.a{
+        min-width: 30%;
+
+}
+.b{
+    min-width: 0;
+
 }
 .box {
     position: relative;
@@ -173,14 +183,14 @@ export default {
     top: 0.9375rem;
     left: 62.5rem;
     text-decoration: none;
-    color: #0f0f0f;
-    z-index: 9;
+    color: #8e8888;
+    z-index: 11;
 }
 .left {
     position: relative;
-    min-width: 30%;
     min-height: 100%;
     background: #f5f5f5;
+    transition: all ease-in-out .5s;
 }
 .detail {
     font-size: 1.75rem;

@@ -7,7 +7,7 @@
                     :to="`/mainpage/details?detail=${JSON.stringify(o)}`"
                     class="img"
                 >
-                    <img v-lazyload="o.img" src="" width="100%" height="100%"  />
+                    <img v-lazyload="o.sportPic" src="" width="100%" height="100%"  />
                 </router-link>
                 <div class="detail">
                     <router-link
@@ -15,7 +15,7 @@
                         :to="`/mainpage/details?detail=${JSON.stringify(o)}`"
                         class="title"
                     >
-                        {{ o.title }}
+                        {{ o.sportName }}
                     </router-link>
                     <div class="icon_layout">
                         <a
@@ -24,7 +24,7 @@
                             class="el-icon-star-off icon"
                             v-show="!o.isStar"
                         >
-                            <span>{{ o.star }}</span>
+                            <span>{{ o.sportLikes }}</span>
                         </a>
                         <a
                             href="#"
@@ -33,7 +33,7 @@
                             class="el-icon-star-on icon"
                             v-show="o.isStar"
                         >
-                            <span>{{ o.star }}</span>
+                            <span>{{ o.sportLikes }}</span>
                         </a>
 
                         <router-link

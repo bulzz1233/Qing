@@ -1,15 +1,16 @@
+import * as $api from '../api/index';
+
 export default {
     name: 'runData',
-    namespaced:true,
+    namespaced: true,
     //拓展下面的数据
     actions: {
         SearchByFit(context, value) {
-            // console.log(value);
+            console.log(value);
 
             $api.searchByFit.searchByFit(value).then(
                 result => {
-                    
-                    context.commit(`add+value.sport`, result.data);
+                    context.commit('addYoung', result.data);
                 },
                 error => {
                     console.log(error.message);
@@ -18,88 +19,27 @@ export default {
         },
     },
     mutations: {
-        addyoung(){
-
+        addYoung(state, obj) {
+            console.log('result' + obj);
+            var i;
+            obj.forEach(element => {
+                if (element.sportFit == 'young') {
+                    state.Young.push(element);
+                }
+                if (element.sportFit == 'mid') {
+                    state.Mid.push(element);
+                }
+                if (element.sportFit == 'old') {
+                    state.Old.push(element);
+                }
+            });
         },
-        addmid(){
-
-        },
-        addold(){
-            
-        }
+        addmid() {},
+        addold() {},
     },
     state: {
-        Ttest: [
-            {
-                id: '001',
-                title: '篮球运球',
-                img: 'a.jpg',
-                describe:'这个运动的简介，这个运动的简介',
-                star: 5,
-                isStar: false,
-            },
-            {
-                id: '002',
-                title: '十分钟减脂操',
-                describe:'这个运动的简介，这个运动的简介',
-                img: 'b.jpg',
-                star: 6,
-                isStar: false,
-            },
-            {
-                id: '003',
-                title: '这是第三段测试文字',
-                describe:'这个运动的简介，这个运动的简介',
-
-                img: 'a.jpg',
-                star: 7,
-                isStar: false,
-            },
-            {
-                id: '004',
-                title: '这是第四段测试文字这是一段测试文字这是一段测试文字',
-                describe:'这个运动的简介，这个运动的简介',
-
-                img: 'b.jpg',
-                star: 8,
-                isStar: false,
-            },
-            {
-                id: '005',
-                title: '这是第四测试文字这是一段测试文字这是一段测试文字',
-                describe:'这个运动的简介，这个运动的简介',
-
-                img: 'a.jpg',
-                star: 100,
-                isStar: false,
-            },
-            {
-                id: '006',
-                title: '这是第五测试文字这是一段测试文字这是一段测试文字',
-                describe:'这个运动的简介，这个运动的简介',
-
-                img: 'b.jpg',
-                star: 100,
-                isStar: false,
-            },
-            {
-                id: '007',
-                title: '这是第五测试文字这是一段测试文字这是一段测试文字',
-                describe:'这个运动的简介，这个运动的简介',
-
-                img: 'a.jpg',
-                star: 100,
-                isStar: false,
-            },
-            {
-                id: '008',
-                title: '这是第五测试文字这是一段测试文字这是一段测试文字',
-                describe:'这个运动的简介，这个运动的简介',
-
-                img: 'b.jpg',
-                star: 100,
-                isStar: false,
-            },
-        ],
+        Young: [],
+        Mid: [],
+        Old: [],
     },
 };

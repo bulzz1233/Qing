@@ -69,19 +69,17 @@
 </template>
 
 <script>
-
 export default {
     data() {
         return {
             params: JSON.parse(this.$route.query.detail),
             ruleForm: {
-                name: JSON.parse(this.$route.query.detail).title,
+                name: JSON.parse(this.$route.query.detail).sportName,
                 date: '',
                 interval: '',
                 reminder: false,
-                uid:'',
+                uid: '',
             },
-
 
             rules: {
                 date: [{ required: true, message: '请选择日期', trigger: 'change' }],
@@ -117,12 +115,14 @@ export default {
                         },
                     },
                 ],
+                disabledDate: time => {
+                    let Tdate = new Date();
+                    return time.getTime() <Tdate.getTime()- 8.64e7;
+                },
             },
         };
     },
-    computed:{
-
-    },
+    computed: {},
 
     methods: {
         submitForm(formName) {
@@ -133,7 +133,7 @@ export default {
                     var startTime = this.ruleForm.date[0];
                     var endTime = this.ruleForm.date[1];
                     //计算出中间的日期
-                    var Chang =[];
+                    var Chang = [];
                     while (endTime - startTime >= 0) {
                         var year = startTime.getFullYear();
                         var month = startTime.getMonth() + 1;
@@ -141,14 +141,14 @@ export default {
                         // alert(year + '-' + month + '-' + day);
                         var obj = {
                             userId: this.uid,
-                            sportName:this.ruleForm.name,
+                            sportName: this.ruleForm.name,
                             planDate: year + '/' + month + '/' + day,
                             planInterval: this.ruleForm.interval,
                             planContent: this.ruleForm.name,
                             planReminder: this.ruleForm.reminder,
-                            planDone:false,
+                            planDone: false,
                         };
-                        Chang.push(obj)
+                        Chang.push(obj);
                         this.$store.commit('calendarData/addTodoList', obj);
 
                         startTime.setDate(
@@ -156,10 +156,10 @@ export default {
                         );
                         // console.log(year + '/' + month + '/' + day);
                     }
-                    let listobj={list:Chang}
+                    let listobj = { list: Chang };
                     //console.log(listobj)
                     //console.log(JSON.stringify(listobj))
-                    this.$store.dispatch('calendarData/ToAddPlan',JSON.stringify(listobj) )
+                    this.$store.dispatch('calendarData/ToAddPlan', JSON.stringify(listobj));
                     this.$router.replace({
                         name: 'mainpage',
                     });
@@ -173,13 +173,11 @@ export default {
             this.$refs[formName].resetFields();
         },
     },
-    mounted(){
-        if(localStorage.getItem("user_data")){
-
-            this.uid =JSON.parse(localStorage.getItem("user_data")).uid
-            
+    mounted() {
+        if (localStorage.getItem('user_data')) {
+            this.uid = JSON.parse(localStorage.getItem('user_data')).uid;
         }
-    }
+    },
 };
 </script>
 

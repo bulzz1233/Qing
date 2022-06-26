@@ -136,7 +136,7 @@ export default {
         list:{
             deep:true,
             handler(newArry,oldArry){
-                if(newArry.length==this.doneTotal){
+                if(newArry.length==this.doneTotal&&newArry!=0){
                     this.finsh_show=true
                 }else{
                     this.finsh_show=false
@@ -206,6 +206,15 @@ export default {
                 .catch(() => {});
         },
     },
+    beforeCreate(){
+        if (localStorage.getItem('user_data')) {
+            let i = JSON.parse(localStorage.getItem('user_data')).uid;
+            let planobj = {
+                uid: i,
+            };
+            this.$store.dispatch('calendarData/AllPlan', JSON.stringify(planobj));
+        }
+    },
     mounted() {
         //获取当日数据
         let Tdate = new Date();
@@ -224,13 +233,7 @@ export default {
         if (localStorage.getItem('token') != null) {
             this.afterLogin_show = true;
         }
-        if (localStorage.getItem('user_data')) {
-            let i = JSON.parse(localStorage.getItem('user_data')).uid;
-            let planobj = {
-                uid: i,
-            };
-            this.$store.dispatch('calendarData/AllPlan', JSON.stringify(planobj));
-        }
+        
 
     },
 };

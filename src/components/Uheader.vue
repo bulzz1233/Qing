@@ -138,7 +138,7 @@ export default {
     name: 'Uheader',
     data() {
         return {
-            head_list: ['跑步', '游泳', '足球', '骑行', '篮球', '瑜伽', '行走', '课程', '商城'],
+            head_list: ['跑步', '游泳', '足球', '骑行', '篮球', '瑜伽', '行走', '课程', '更多'],
             // app二维码展示
             show: false,
             // 登录后显示

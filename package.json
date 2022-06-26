@@ -13,9 +13,12 @@
     "core-js": "^3.8.3",
     "element-ui": "^2.15.6",
     "qs": "^6.10.5",
+    "video.js": "^7.19.2",
     "vue": "^2.6.14",
     "vue-calendar-component": "^2.8.2",
+    "vue-core-video-player": "^0.2.0",
     "vue-router": "^3.5.3",
+    "vue-video-player": "^5.0.2",
     "vuex": "^3.6.2"
   },
   "devDependencies": {
@@ -27,6 +30,7 @@
     "babel-plugin-component": "^1.1.1",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
+    "videojs-contrib-hls": "^5.15.0",
     "vue-template-compiler": "^2.6.14"
   },
   "eslintConfig": {

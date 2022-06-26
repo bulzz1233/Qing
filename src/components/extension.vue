@@ -11,7 +11,7 @@
             </li>
             <!-- 卡片遍历 -->
             <li class="ucard_layout">
-                <ucard class="ucard" v-for="(o, index) in extension_data" :key="index" :o="o" />
+                <ucard class="ucard" v-for="o in young_data" :key="o.sid" :o="o" />
                 <div class="none"></div>
             </li>
         </ul>
@@ -25,7 +25,7 @@
                 <div class="none"></div>
             </li>
             <li class="ucard_layout">
-                <ucard class="ucard" v-for="(o, index) in extension_data" :key="index" :o="o" />
+                <ucard class="ucard" v-for="(o, index) in mid_data" :key="index" :o="o" />
                 <div class="none"></div>
             </li>
         </ul>
@@ -39,7 +39,7 @@
                 <div class="none"></div>
             </li>
             <li class="ucard_layout">
-                <ucard class="ucard" v-for="(o, index) in extension_data" :key="index" :o="o" />
+                <ucard class="ucard" v-for="(o, index) in old_data" :key="index" :o="o" />
                 <div class="none"></div>
             </li>
         </ul>
@@ -55,7 +55,9 @@ export default {
     components: { Ucard },
     data() {
         return {
-            extension_data: [],
+            young_data: [],
+            mid_data:[],
+            old_data:[],
             title:['青年','中年','老年']
         };
     },
@@ -70,11 +72,24 @@ export default {
         }
     },
     beforeCreate(){
-        this.$store.dispatch("runData/All")
+        let obj1 ={
+            fit:"young"
+        }
+        this.$store.dispatch("runData/SearchByFit",JSON.stringify(obj1))
+            let obj2 ={
+            fit:"mid"
+        }
+        this.$store.dispatch("runData/SearchByFit",JSON.stringify(obj2))
+            let obj3 ={
+            fit:"old"
+        }
+        this.$store.dispatch("runData/SearchByFit",JSON.stringify(obj3))
 
     },
     mounted() {
-        this.extension_data = this.$store.state.runData.Ttest;
+        this.young_data = this.$store.state.runData.Young;
+        this.mid_data = this.$store.state.runData.Mid;
+        this.old_data = this.$store.state.runData.Old;
     },
 };
 </script>
