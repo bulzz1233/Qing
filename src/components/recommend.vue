@@ -1,5 +1,3 @@
-/**备忘,登陆前向vuex的查询请求应该带上用户参数 */
-
 <template>
     <div class="Ubody">
         <div class="block">
@@ -32,7 +30,13 @@
                         v-for="(t, index) in list"
                         :key="t.planId"
                     >
-                        <div class="content" :class="(t.planDone)?'true':'false'" @click="toStudy(t)" >{{ t.planContent }}</div>
+                        <div
+                            class="content"
+                            :class="t.planDone ? 'true' : 'false'"
+                            @click="toStudy(t.planContent)"
+                        >
+                            {{ t.planContent }}
+                        </div>
                         <div class="btn_layout" v-show="!t.planDone">
                             <div class="icon check" @click="bedone(t, index)">✔️</div>
                             <div class="icon del" @click="del(t.planId, index)">❌</div>
@@ -41,7 +45,9 @@
                             <div class="done text" v-show="t.planDone">已完成</div>
                         </transition>
                     </div>
-                    <div class="todotips" v-show="todotips_show">今日还没有训练计划过，快去添加吧</div>
+                    <div class="todotips" v-show="todotips_show">
+                        今日还没有训练计划过，快去添加吧
+                    </div>
                     <div class="todotips" v-show="finsh_show">✅打卡成功，已完成打卡天</div>
                     <div class="null"></div>
                 </div>
@@ -68,7 +74,7 @@ export default {
             //登录后展示的信息，应该根据是否有本地存储token来判断
             afterLogin_show: false,
             ImgUrl: [`img/a.jpg`, `img/b.jpg`],
-            uid:'',
+            uid: '',
             // 被标记的日期
             //arr: [],
             // 我的计划
@@ -78,8 +84,7 @@ export default {
             done_style: '',
             //获得日期
             thisDate: '',
-            finsh_show:false
-            
+            finsh_show: false,
         };
     },
     computed: {
@@ -113,12 +118,11 @@ export default {
             }
             return arr;
         },
-        todotips_show(){
-            if(this.list.length==0){
+        todotips_show() {
+            if (this.list.length == 0) {
                 return true;
-            }else return false
+            } else return false;
         },
-
     },
     watch: {
         arr: {
@@ -133,17 +137,16 @@ export default {
                 this.list = newArry;
             },
         },
-        list:{
-            deep:true,
-            handler(newArry,oldArry){
-                if(newArry.length==this.doneTotal&&newArry!=0){
-                    this.finsh_show=true
-                }else{
-                    this.finsh_show=false
+        list: {
+            deep: true,
+            handler(newArry, oldArry) {
+                if (newArry.length == this.doneTotal && newArry != 0) {
+                    this.finsh_show = true;
+                } else {
+                    this.finsh_show = false;
                 }
-            }
-        }
-        
+            },
+        },
     },
     methods: {
         //转到登录界面
@@ -154,8 +157,10 @@ export default {
         },
         //转到定制计划界面
         goplan() {
-            this.$router.replace({
-                name: 'user_plan',
+            this.$nextTick(() => {
+                document
+                    .getElementsByClassName('extension_layout')[0]
+                    .scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
             });
         },
         //修改完成状态
@@ -163,23 +168,22 @@ export default {
             this.done_style = 'a';
             //修改、提交完成状态
             //向后端发送请求完成修改
-            
-                    let obj = {
-                        pid: t.planId,
-                        usrId:t.usrId,
-                        planDate:t.planDate,
-                        planInterval:t.planInterval,
-                        planContent:t.planContent,
-                        planReminder:t.planReminder,
-                        planDone:false
-                    };
-                    this.$store.dispatch('calendarData/UpdatePlan', JSON.stringify(obj));
-                    Vue.set(this.list[index], 'planDone', 'true');
-                    if(this.doneTotal==this.list.length){
-                        MessageBox.alert("恭喜完成今日打卡")
-                        this.finsh_show=true
-                    }
 
+            let obj = {
+                pid: t.planId,
+                usrId: t.usrId,
+                planDate: t.planDate,
+                planInterval: t.planInterval,
+                planContent: t.planContent,
+                planReminder: t.planReminder,
+                planDone: false,
+            };
+            this.$store.dispatch('calendarData/UpdatePlan', JSON.stringify(obj));
+            Vue.set(this.list[index], 'planDone', 'true');
+            if (this.doneTotal == this.list.length) {
+                MessageBox.alert('恭喜完成今日打卡');
+                this.finsh_show = true;
+            }
         },
         //点击日历日期
         clickDay(data) {
@@ -205,8 +209,22 @@ export default {
                 })
                 .catch(() => {});
         },
+        //跳转详情
+        toStudy(name) {
+            let obj;
+            this.$store.state.runData.All.forEach(element => {
+                if (element.sportName == name) {
+                    obj = element;
+                }
+            });
+
+            console.log(obj);
+            this.$router.replace({
+                path: '/mainpage/details?detail=' + JSON.stringify(obj),
+            });
+        },
     },
-    beforeCreate(){
+    beforeCreate() {
         if (localStorage.getItem('user_data')) {
             let i = JSON.parse(localStorage.getItem('user_data')).uid;
             let planobj = {
@@ -219,13 +237,13 @@ export default {
         //获取当日数据
         let Tdate = new Date();
         this.thisDate = Tdate.getFullYear() + '/' + (Tdate.getMonth() + 1) + '/' + Tdate.getDate();
-        // console.log(thisDate);
-        //从仓库获取数据
-        // setTimeout(() => {
-        //     this.list = this.todoList_data;
-        // }, 500);
-        // this.todoList_data = ;
-        //获取
+        setTimeout(() => {
+            this.list.forEach(element => {
+                if (element.planReminder) {
+                    MessageBox.alert(element.sportName, '今日计划');
+                }
+            });
+        }, 200);
         if (localStorage.getItem('user_data')) {
             this.uid = JSON.parse(localStorage.getItem('user_data')).uid;
         }
@@ -233,8 +251,6 @@ export default {
         if (localStorage.getItem('token') != null) {
             this.afterLogin_show = true;
         }
-        
-
     },
 };
 </script>
@@ -328,14 +344,13 @@ export default {
     cursor: default;
     text-decoration: line-through;
 }
-.todotips{
+.todotips {
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top:1rem;
+    margin-top: 1rem;
     color: #7b7a7a;
     font-size: 12px;
-
 }
 .btn_layout {
     display: flex;

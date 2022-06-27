@@ -1,10 +1,10 @@
 <template>
-    <div class="card">
+    <div class="card" >
         <ul class="card_layout">
             <li class="box">
                 <router-link
                     replace
-                    :to="`${thePath}details?detail=${JSON.stringify(o)}`"
+                    :to="`/mainpage/more/Moredetails?detail=${JSON.stringify(o)}&title=${title}`"
                     class="img"
                 >
                     <img v-lazyload="o.sportPic" src="" width="100%" height="100%" />
@@ -12,12 +12,12 @@
                 <div class="detail">
                     <router-link
                         replace
-                        :to="`${thePath}details?detail=${JSON.stringify(o)}`"
+                        :to="`/mainpage/more/Moredetails?detail=${JSON.stringify(o)}&title=${title}`"
                         class="title"
                     >
                         {{ o.sportName }}
                     </router-link>
-                    <div class="icon_layout">
+                    <div class="icon_layout" >
                         <a
                             href="#"
                             @click.prevent="UserStar(o, index)"
@@ -37,7 +37,7 @@
 
                         <router-link
                             replace
-                            :to="`${thePath}addCalendar?detail=${JSON.stringify(o)}`"
+                            :to="`/mainpage/more/MoreAddCalendar?detail=${JSON.stringify(o)}&title=${title}`"
                             class="el-icon-circle-plus-outline icon add_plan"
                         ></router-link>
                     </div>
@@ -51,21 +51,12 @@
 import { Loading } from 'element-ui';
 
 export default {
-    name: 'Ucard',
+    name: 'Morecard',
     data() {
         return {
             imgdata: 'a.jpg',
+            
         };
-    },
-    computed: {
-        thePath() {
-            if (this.$route.path.indexOf('searchResult') != -1) {
-                return '/mainpage/searchResult/';
-            }
-            else{
-                return "/mainpage/"
-            }
-        },
     },
     methods: {
         //收藏功能
@@ -103,7 +94,7 @@ export default {
             }, time);
         },
     },
-    props: ['o'],
+    props: ['o','title'],
     mounted() {},
 };
 </script>

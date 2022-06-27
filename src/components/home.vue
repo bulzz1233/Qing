@@ -63,6 +63,7 @@ export default {
             this.main_height = document.body.clientHeight;
         });
         
+        
     },
 };
 </script>

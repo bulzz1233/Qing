@@ -1,14 +1,17 @@
 <template>
     <div id="app">
         <!-- class="animate__animated animate__zoomInDown animate__backOutLeft" -->
-        <home v-if="this.$route.path == '/'" />
+        <home v-show="this.$route.path == '/'" />
         <transition
             appear
             name="custom-classes-transition"
             enter-active-class="animate__animated animate__fadeIn"
             leave-active-class="animate__animated animate__fadeOut"
         >
-            <router-view class="mainpage"></router-view>
+        <keep-alive>
+        <router-view class="mainpage"></router-view>
+        </keep-alive>
+            
         </transition>
     </div>
 </template>

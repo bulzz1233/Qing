@@ -26,18 +26,7 @@ const router = new VueRouter({
                     meta: { title: '登录' },
                     component:()=>import('../pages/login.vue'),
                 },
-                {
-                    path: 'user_plan',
-                    name: 'user_plan',
-                    meta: { title: '定制个性计划' },
-                    component:()=>import('../pages/plan_form.vue'),
-                },
-                {
-                    path: 'plan',
-                    name: 'plan',
-                    meta: { title: '定制计划' },
-                    component:()=>import('../pages/plan.vue'),
-                },
+
                 {
                     path: 'addCalendar',
                     name: 'addCalendar',
@@ -63,15 +52,71 @@ const router = new VueRouter({
                     path: 'more',
                     name: 'more',
                     component:()=>import('../pages/more.vue'),
+                    children:[
+                        {
+                            path: 'Moredetails',
+                            name: 'Moredetails',
+                            meta: { title: '详情' },
+                            component:()=>import('../pages/MoreDetails.vue'),
+        
+                            children: [
+        
+                                {
+                                    path: 'study',
+                                    name: 'study',
+                                    component:()=>import('../pages/study.vue'),
+                                },
+                            ],
+                        },
+                        {
+                            path: 'MoreAddCalendar',
+                            name: 'MoreAddCalendar',
+                            meta: { title: '添加训练' },
+                            component:()=>import('../pages/MoreAddCalendar.vue'),
+                        },
+                    ]
+                },
+                {
+                    path: 'planChart',
+                    name: 'planChart',
+                    component:()=>import('../pages/planChart.vue'),
+                },
+                {
+                    path: 'searchResult',
+                    name: 'searchResult',
+                    component:()=>import('../pages/searchResult.vue'),
+                    children:[
+                        {
+                            path: 'addCalendar',
+                            name: 'addCalendar',
+                            meta: { title: '添加训练' },
+                            component:()=>import('../pages/addCalendar.vue'),
+                        },
+                        {
+                            path: 'details',
+                            name: 'details',
+                            meta: { title: '详情' },
+                            component:()=>import('../pages/details.vue'),
+        
+                            children: [
+        
+                                {
+                                    path: 'study',
+                                    name: 'study',
+                                    component:()=>import('../pages/study.vue'),
+                                },
+                            ],
+                        },
+                    ]
                 },
                 
             ],
         },
-        {
-            path: '/',
-            name: 'home',
-            component:()=>import('../components/home.vue') ,
-        }
+        // {
+        //     path: '/',
+        //     name: 'home',
+        //     component:()=>import('../components/home.vue') ,
+        // }
     ],
 });
 // 前置路由守卫
@@ -89,6 +134,7 @@ const router = new VueRouter({
         if(from.name!='login'&&to.name=='register'){
             next({name:'login'})
         }else next()
+
     })
 // 后置路由守卫
 router.afterEach((to, from) => {

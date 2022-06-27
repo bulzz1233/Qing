@@ -1,7 +1,7 @@
 <template>
     <div class="head">
         <div class="none"></div>
-        <ul class="list_1">
+        <ul class="list_1" @click="card_loading(500)">
             <li class="li_1">轻运动</li>
             <li><router-link replace to="/mainpage">首页</router-link></li>
             <li v-for="(t, index) in head_list" :key="index">
@@ -100,19 +100,19 @@
                             <center>
                                 <div class="username">{{ user_name }}</div>
                             </center>
-                            <div class="box">
-                                <a class="meum_layout" href="">
+                            <div class="box" @click="card_loading(500)">
+                                <router-link replace to="/mainpage" class="meum_layout">
                                     <span class="el-icon-star-off icon"></span>
                                     <span>我的收藏</span>
-                                </a>
+                                </router-link>
                             </div>
-                            <div class="box">
-                                <a class="meum_layout" href="">
+                            <div class="box" @click="card_loading(500)">
+                                <router-link replace to="/mainpage/planChart" class="meum_layout">
                                     <span class="el-icon-finished icon"></span>
                                     <span>我的计划</span>
-                                </a>
+                                </router-link>
                             </div>
-                            <div class="box">
+                            <div class="box" @click="card_loading(500)">
                                 <a class="meum_layout" href="">
                                     <span class="el-icon-edit icon"></span>
                                     <span>编辑资料</span>
@@ -133,7 +133,8 @@
     </div>
 </template>
 <script>
-import { parse } from 'qs';
+import { Loading } from 'element-ui';
+
 export default {
     name: 'Uheader',
     data() {
@@ -158,15 +159,12 @@ export default {
         Tips() {
             let arr1 = [];
             if (this.$store.state.headData.Tips_list) {
-
-                arr1= this.$store.state.headData.Tips_list
-                }
+                arr1 = this.$store.state.headData.Tips_list;
+            }
             return arr1;
-        }
-            },
+        },
+    },
 
-
-    
     methods: {
         // 向action提交请求，action在通过axios向服务器请求获得数据
         search_method() {
@@ -175,8 +173,11 @@ export default {
         // 通过关键字搜索
         searchByKey(e) {
             e.preventDefault();
-            console.log(this.search);
-            //搜索内容
+            //console.log(this.search);
+            //跳转
+            this.$router.replace({
+                name: 'searchResult',
+            });
         },
         // 搜索提示
         tips_list() {
@@ -199,24 +200,39 @@ export default {
             //搜索
 
             this.tipsList_show = false;
-            
+            this.$router.replace({
+                name: 'searchResult',
+            });
         },
         //退出登录
-        outLogin(){
+        outLogin() {
             this.$confirm('确认要退出登录吗？', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning',
             })
                 .then(() => {
-                    localStorage.removeItem("user_data")
-                    localStorage.removeItem("token")
-                    window.location.reload()
+                    localStorage.removeItem('user_data');
+                    localStorage.removeItem('token');
+                    window.location.reload();
                 })
-                .catch(() => {
-                    
-                });
-        }
+                .catch(() => {});
+        },
+        card_loading(time) {
+            let options = {
+                fullscreen: true,
+                text: '请稍后',
+                background: 'white',
+            };
+            let loadingInstance = Loading.service(options);
+            //         this.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
+            //         loadingInstance.close();
+            // });
+            setTimeout(() => {
+                loadingInstance.close();
+                // });
+            }, time);
+        },
     },
     mounted() {
         //判断是否有token

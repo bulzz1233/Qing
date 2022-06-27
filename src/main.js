@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import {Button,Carousel,CarouselItem,Form,FormItem,Input,Icon,Backtop,Select,DatePicker,Switch,Checkbox,Radio,Row,Col,Option,RadioGroup,CheckboxGroup,Loading,MessageBox,} from 'element-ui'
+import {Button,Carousel,CarouselItem,Form,FormItem,Input,Icon,Backtop,Select,DatePicker,Switch,Checkbox,Radio,Row,Col,Option,RadioGroup,CheckboxGroup,Loading,MessageBox,Collapse,CollapseItem} from 'element-ui'
 import './assets/css/index.css'
 import VueRouter from 'vue-router'
 import video from 'video.js'
@@ -36,6 +36,8 @@ Vue.use(Option)
 Vue.use(RadioGroup)
 Vue.use(CheckboxGroup)
 Vue.use(Loading)
+Vue.use(Collapse)
+Vue.use(CollapseItem)
 Vue.component(MessageBox.name,MessageBox)
 Vue.prototype.$video = video
 Vue.prototype.$confirm = MessageBox.confirm

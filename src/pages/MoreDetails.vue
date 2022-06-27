@@ -9,7 +9,9 @@
                         <router-link
                             class="link"
                             replace
-                            :to="`${thePath}details?detail=${JSON.stringify(params)}`"
+                            :to="`/mainpage/more/Moredetails?detail=${JSON.stringify(
+                                params
+                            )}&title=${title}`"
                         >
                             介绍
                         </router-link>
@@ -27,7 +29,7 @@
                         <router-link
                             class="link"
                             replace
-                            :to="`${thePath}details/study?detail=${JSON.stringify(params)}`"
+                            :to="`/mainpage/more/Moredetails/study?title=${title}&detail=${JSON.stringify(params)}`"
                         >
                             开始学习
                         </router-link>
@@ -79,7 +81,11 @@
                     </div>
                 </div>
             </div>
-            <router-link replace class="el-icon-close icon close" :to="`${thePath}`"></router-link>
+            <router-link
+                replace
+                class="el-icon-close icon close"
+                :to="`/mainpage/more?title=${title}`"
+            ></router-link>
         </div>
     </div>
 </template>
@@ -93,6 +99,7 @@ export default {
             // btn_show: true,
             btn_show1: true,
             left_width: 'a',
+            title: this.$route.query.title,
         };
     },
     methods: {
@@ -108,7 +115,6 @@ export default {
         // },
         show3() {
             this.left_width = 'b';
-
             this.show = false;
             this.btn_show = false;
             this.btn_show1 = false;
@@ -130,17 +136,9 @@ export default {
             this.btn_show = false;
             this.btn_show1 = false;
             this.$router.replace({
-                path: this.thePath + 'details/study?detail=' + JSON.stringify(this.params),
+                path:"Moredetails/study?detail="+JSON.stringify(this.params)+"&title="+this.title,
+
             });
-        },
-    },
-    computed: {
-        thePath() {
-            if (this.$route.path.indexOf('searchResult') != -1) {
-                return '/mainpage/searchResult/';
-            } else {
-                return '/mainpage/';
-            }
         },
     },
     mounted() {},

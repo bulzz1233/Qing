@@ -8,5 +8,6 @@ export * as allplan from './allplan.js'
 export * as searchByFit from './searchByFit.js'
 export * as delplan from './delplan.js'
 export * as updateplan from './updateplan.js'
+export * as allsport from './allsport.js'
 
 

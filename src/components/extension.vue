@@ -84,6 +84,7 @@ export default {
             fit:"old"
         }
         this.$store.dispatch("runData/SearchByFit",JSON.stringify(obj3))
+        this.$store.dispatch("runData/AllSport")
 
     },
     mounted() {

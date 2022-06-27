@@ -6,7 +6,7 @@
                 replace
                 href="#"
                 class="el-icon-close icon close"
-                to="/mainpage"
+                :to="`/mainpage/more?title=${title}`"
             ></router-link>
             <div class="title">添加训练到日历</div>
             <div class="form_layout">
@@ -82,6 +82,7 @@ export default {
                 reminder: false,
                 uid: '',
             },
+            title: this.$route.query.title,
 
             rules: {
                 date: [{ required: true, message: '请选择日期', trigger: 'change' }],
@@ -164,7 +165,8 @@ export default {
                     //console.log(JSON.stringify(listobj))
                     this.$store.dispatch('calendarData/ToAddPlan', JSON.stringify(listobj));
                     this.$router.replace({
-                        name: 'mainpage',
+                
+                        path:"/mainpage/more?title="+this.title
                     });
                 } else {
                     console.log('error submit!!');
