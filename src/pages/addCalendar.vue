@@ -6,7 +6,7 @@
                 replace
                 href="#"
                 class="el-icon-close icon close"
-                to="/mainpage"
+                :to="`${thePath}`"
             ></router-link>
             <div class="title">添加训练到日历</div>
             <div class="form_layout">
@@ -75,8 +75,8 @@ export default {
             params: JSON.parse(this.$route.query.detail),
             ruleForm: {
                 name: JSON.parse(this.$route.query.detail).sportName,
-                type:JSON.parse(this.$route.query.detail).sportType,
-                
+                type: JSON.parse(this.$route.query.detail).sportType,
+
                 date: '',
                 interval: '',
                 reminder: false,
@@ -119,12 +119,23 @@ export default {
                 ],
                 disabledDate: time => {
                     let Tdate = new Date();
-                    return time.getTime() <Tdate.getTime()- 8.64e7;
+                    return time.getTime() < Tdate.getTime() - 8.64e7;
                 },
             },
         };
     },
-    computed: {},
+    computed: {
+        thePath() {
+            if (this.$route.path.indexOf('searchResult') != -1) {
+                return '/mainpage/searchResult/';
+            }
+            if (this.$route.path.indexOf('Likes') != -1) {
+                return '/mainpage/Likes/';
+            } else {
+                return '/mainpage/';
+            }
+        },
+    },
 
     methods: {
         submitForm(formName) {
@@ -144,7 +155,7 @@ export default {
                         var obj = {
                             userId: this.uid,
                             sportName: this.ruleForm.name,
-                            sportType:this.ruleForm.type,
+                            sportType: this.ruleForm.type,
                             planDate: year + '/' + month + '/' + day,
                             planInterval: this.ruleForm.interval,
                             planContent: this.ruleForm.name,
@@ -163,8 +174,9 @@ export default {
                     //console.log(listobj)
                     //console.log(JSON.stringify(listobj))
                     this.$store.dispatch('calendarData/ToAddPlan', JSON.stringify(listobj));
+
                     this.$router.replace({
-                        name: 'mainpage',
+                        path:this.thePath,
                     });
                 } else {
                     console.log('error submit!!');

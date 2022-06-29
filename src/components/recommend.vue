@@ -48,7 +48,9 @@
                     <div class="todotips" v-show="todotips_show">
                         今日还没有训练计划过，快去添加吧
                     </div>
-                    <div class="todotips" v-show="finsh_show">✅打卡成功，已完成打卡天</div>
+                    <div class="todotips" v-show="finsh_show">
+                        ✅打卡成功，已完成打卡 {{ thisDay }} 天
+                    </div>
                     <div class="null"></div>
                 </div>
                 <div class="coustomized">
@@ -85,6 +87,7 @@ export default {
             //获得日期
             thisDate: '',
             finsh_show: false,
+            thisDay: 0,
         };
     },
     computed: {
@@ -123,8 +126,17 @@ export default {
                 return true;
             } else return false;
         },
+        finish_day() {
+            return this.$store.state.calendarData.FinishDay;
+        },
     },
     watch: {
+        finish_day: {
+            deep: true,
+            handler(newArry, oldArry) {
+                this.thisDay = newArry;
+            },
+        },
         arr: {
             deep: true,
             handler(newArry, oldArry) {
@@ -171,7 +183,7 @@ export default {
 
             let obj = {
                 pid: t.planId,
-                usrId: t.usrId,
+                userId: t.usrId,
                 planDate: t.planDate,
                 planInterval: t.planInterval,
                 planContent: t.planContent,
@@ -180,7 +192,15 @@ export default {
             };
             this.$store.dispatch('calendarData/UpdatePlan', JSON.stringify(obj));
             Vue.set(this.list[index], 'planDone', 'true');
+
             if (this.doneTotal == this.list.length) {
+                let obj1 = {
+                    userId: t.userId,
+                    finishDate: t.planDate,
+                };
+                console.log(obj1)
+                this.$store.dispatch('calendarData/Addfinish', JSON.stringify(obj1));
+                this.thisDay=this.thisDay + 1
                 MessageBox.alert('恭喜完成今日打卡');
                 this.finsh_show = true;
             }
@@ -218,7 +238,6 @@ export default {
                 }
             });
 
-            console.log(obj);
             this.$router.replace({
                 path: '/mainpage/details?detail=' + JSON.stringify(obj),
             });
@@ -230,7 +249,11 @@ export default {
             let planobj = {
                 uid: i,
             };
+            let obj1 = {
+                userId: i,
+            };
             this.$store.dispatch('calendarData/AllPlan', JSON.stringify(planobj));
+            this.$store.dispatch('calendarData/Allfinish', JSON.stringify(obj1));
         }
     },
     mounted() {
@@ -251,6 +274,7 @@ export default {
         if (localStorage.getItem('token') != null) {
             this.afterLogin_show = true;
         }
+        this.thisDay = this.$store.state.calendarData.FinishDay
     },
 };
 </script>

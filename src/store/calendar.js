@@ -59,6 +59,29 @@ export default {
                     console.log(error.message);
                 }
             )
+        },
+        Allfinish(context,value){
+            $api.allfinish.allfinish(value).then(
+                result=>{
+                    context.commit('Allfinish', result.data);
+
+                },
+                error=>{
+                    console.log(error.message)
+                }
+            )
+        },
+        Addfinish(context,value){
+            console.log(value)
+            $api.addfinish.addfinish(value).then(
+                
+                result=>{
+                    console.log("打卡成功")
+                },
+                error=>{
+                    console.log(error.message)
+                }
+            )
         }
     },
     mutations: {
@@ -78,17 +101,27 @@ export default {
                     
                 }
             });
-            
+
             // let i = [];
             // let u = i.filters((item, index) => {
             //     return item.planId != obj.pid
             // });
             // state.Plan = u
         },
+        Allfinish(state,obj){
+            let i=0
+            obj.forEach(element=>{
+                state.FinishDate.push(element.finishDate)
+                i++
+            })
+            state.FinishDay = i
+        }
     },
     state: {
         // 待做事项
         Plan: [],
         Test: [],
+        FinishDate:[],
+        FinishDay:0
     },
 };

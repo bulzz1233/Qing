@@ -138,6 +138,9 @@ export default {
         thePath() {
             if (this.$route.path.indexOf('searchResult') != -1) {
                 return '/mainpage/searchResult/';
+            }
+            if (this.$route.path.indexOf('Likes') != -1) {
+                return '/mainpage/Likes/';
             } else {
                 return '/mainpage/';
             }

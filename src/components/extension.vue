@@ -3,47 +3,58 @@
         <ul class="ul_layout">
             <li class="head_layout">
                 <div class="head">
-                    {{title[0]}}
+                    {{ title[0] }}
                     <div class="decoration"></div>
                 </div>
-                <el-button type="primary" class="more"  @click="gomore(0)" >查看更多 ></el-button>
+                <el-button type="primary" class="more" @click="gomore(0)">查看更多 ></el-button>
                 <div class="none"></div>
             </li>
             <!-- 卡片遍历 -->
             <li class="ucard_layout">
-                <ucard class="ucard" v-for="o in young_data" :key="o.sid" :o="o" />
+                <ucard class="ucard" v-for="(o,index) in young_data" :key="index" :o="o" :uid="uid" />
                 <div class="none"></div>
             </li>
         </ul>
         <ul class="ul_layout">
             <li class="head_layout">
                 <div class="head">
-                    {{title[1]}}
+                    {{ title[1] }}
                     <div class="decoration"></div>
                 </div>
-                <el-button type="primary" class="more"  @click="gomore(1)" >查看更多 ></el-button>
+                <el-button type="primary" class="more" @click="gomore(1)">查看更多 ></el-button>
                 <div class="none"></div>
             </li>
             <li class="ucard_layout">
-                <ucard class="ucard" v-for="(o, index) in mid_data" :key="index" :o="o" />
+                <ucard
+                    class="ucard"
+                    v-for="(o, index) in mid_data"
+                    :key="index"
+                    :o="o"
+                    :uid="uid"
+                />
                 <div class="none"></div>
             </li>
         </ul>
         <ul class="ul_layout">
             <li class="head_layout">
                 <div class="head">
-                    {{title[2]}}
+                    {{ title[2] }}
                     <div class="decoration"></div>
                 </div>
-                <el-button type="primary" class="more"  @click="gomore(2)"  >查看更多 ></el-button>
+                <el-button type="primary" class="more" @click="gomore(2)">查看更多 ></el-button>
                 <div class="none"></div>
             </li>
             <li class="ucard_layout">
-                <ucard class="ucard" v-for="(o, index) in old_data" :key="index" :o="o" />
+                <ucard
+                    class="ucard"
+                    v-for="(o, index) in old_data"
+                    :key="index"
+                    :o="o"
+                    :uid="uid"
+                />
                 <div class="none"></div>
             </li>
         </ul>
-        
     </div>
 </template>
 
@@ -56,38 +67,47 @@ export default {
     data() {
         return {
             young_data: [],
-            mid_data:[],
-            old_data:[],
-            title:['青年','中年','老年']
+            mid_data: [],
+            old_data: [],
+            title: ['青年', '中年', '老年'],
         };
     },
-    methods:{
-        gomore(data_index){
-            this.$router.replace({
-                name:'more',
-                query:{
-                    title:this.title[data_index]
-                }
-            })
-        }
+    computed: {
+        uid() {
+            let i;
+            if (localStorage.getItem('user_data')) {
+                i = JSON.parse(localStorage.getItem('user_data')).uid;
+            }
+            return i;
+        },
     },
-    beforeCreate(){
-        let obj1 ={
-            fit:"young"
-        }
-        this.$store.dispatch("runData/SearchByFit",JSON.stringify(obj1))
-            let obj2 ={
-            fit:"mid"
-        }
-        this.$store.dispatch("runData/SearchByFit",JSON.stringify(obj2))
-            let obj3 ={
-            fit:"old"
-        }
-        this.$store.dispatch("runData/SearchByFit",JSON.stringify(obj3))
-        this.$store.dispatch("runData/AllSport")
-
+    methods: {
+        gomore(data_index) {
+            this.$router.replace({
+                name: 'more',
+                query: {
+                    title: this.title[data_index],
+                },
+            });
+        },
+    },
+    beforeCreate() {
+        let obj1 = {
+            fit: 'young',
+        };
+        this.$store.dispatch('runData/SearchByFit', JSON.stringify(obj1));
+        let obj2 = {
+            fit: 'mid',
+        };
+        this.$store.dispatch('runData/SearchByFit', JSON.stringify(obj2));
+        let obj3 = {
+            fit: 'old',
+        };
+        this.$store.dispatch('runData/SearchByFit', JSON.stringify(obj3));
+        this.$store.dispatch('runData/AllSport');
     },
     mounted() {
+        
         this.young_data = this.$store.state.runData.Young;
         this.mid_data = this.$store.state.runData.Mid;
         this.old_data = this.$store.state.runData.Old;

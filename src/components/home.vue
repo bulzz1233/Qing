@@ -1,27 +1,20 @@
 <template>
-    <div class="style" v-show='show'>
-        
+    <div class="style" v-show="show">
         <div class="mask"></div>
 
         <div class="background"></div>
         <div class="content">
-            
-            <transition
-                enter-active-class="animate__zoomInDown"
-                appear
-                >
-                <ul class="list animate__animated animate__zoomInDown" >
-                    <li class="title "
-                        
-                        >轻运动</li>
+            <transition enter-active-class="animate__zoomInDown" appear>
+                <ul class="list animate__animated animate__zoomInDown">
+                    <li class="title">轻运动</li>
                     <li class="Etitle">Light Exercise</li>
                     <li class="details">定制属于自己的健身计划</li>
                 </ul>
             </transition>
-            
-            <button  class="start animate__animated animate__zoomInUp" 
-            @click="gologin"
-            >开始使用</button>
+
+            <button class="start animate__animated animate__zoomInUp" @click="gologin">
+                开始使用
+            </button>
         </div>
         <!-- 轮播图 -->
         <el-carousel :height="main_height + 'px'">
@@ -29,31 +22,26 @@
                 <img :src="require('../assets/' + item)" />
             </el-carousel-item>
         </el-carousel>
-        
     </div>
-
 </template>
 
 <script>
-
 export default {
     name: 'home',
     data() {
         return {
             main_height: document.body.clientHeight,
             ImgUrl: [`img/a.jpg`, `img/b.jpg`],
-            show:true,
-            
+            show: true,
         };
     },
-    methods:{
-        gologin(){
-            this.show=!this.show
+    methods: {
+        gologin() {
+            this.show = !this.show;
             this.$router.replace({
-                name:'mainpage',
-                
-            })
-        }
+                name: 'mainpage',
+            });
+        },
     },
     mounted() {
         // 响应式高度
@@ -62,8 +50,7 @@ export default {
         window.addEventListener('resize', () => {
             this.main_height = document.body.clientHeight;
         });
-        
-        
+
     },
 };
 </script>
@@ -103,9 +90,8 @@ export default {
     margin-bottom: 4.25rem;
     color: rgb(233, 242, 248);
 }
-.style{
+.style {
     overflow-x: hidden;
-    
 }
 .title {
     font-family: 'zhongwen1';

@@ -39,14 +39,7 @@
 
                         <el-form-item>
                             <div class="btn_layout">
-                                <el-button
-                                    type="primary"
-                                    v-throttled="{
-                                        type: 'click',
-                                    }"
-                                    
-                                    @click="submitForm('ruleForm')"
-                                >
+                                <el-button type="primary" @click="submitForm('ruleForm')">
                                     登录
                                 </el-button>
                                 <el-button @click="resetForm('ruleForm')">重置</el-button>
@@ -64,7 +57,6 @@
     </div>
 </template>
 <script>
-
 import axios from 'axios';
 export default {
     data() {
@@ -94,8 +86,7 @@ export default {
             },
         };
     },
- 
-    
+
     methods: {
         submitForm(formName) {
             this.$refs[formName].validate(valid => {
@@ -104,16 +95,12 @@ export default {
                     // axios.get('/api/admin/AA');
 
                     this.$store.dispatch('userData/ToLogin', JSON.stringify(this.ruleForm));
-                    
-                    
-                        
+
                     // setInterval(()=>{
                     //     const token = localStorage.getItem('token')
                     //     if(token){window.location.reload()}
-                        
-                    // },1000) 
-                    
-                    
+
+                    // },1000)
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -123,11 +110,7 @@ export default {
         resetForm(formName) {
             this.$refs[formName].resetFields();
         },
-
     },
-
-
-
 };
 </script>
 

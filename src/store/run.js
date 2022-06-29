@@ -33,38 +33,38 @@ export default {
     mutations: {
         addYoung(state, obj) {
             obj.forEach(element => {
-                if (element.sportFit == 'young') {
+                if (element.sportFit.indexOf('young')!=-1) {
                     state.Young.push(element);
                 }
-                if (element.sportFit == 'mid') {
+                if (element.sportFit.indexOf('mid')!=-1) {
                     state.Mid.push(element);
                 }
-                if (element.sportFit == 'old') {
+                if (element.sportFit.indexOf('old')!=-1) {
                     state.Old.push(element);
                 }
             });
         },
         addType(state,obj) {
             obj.forEach(element => {
-                if (element.sportType == 'run') {
+                if (element.sportType.indexOf('run')!=-1) {
                     state.Run.push(element);
                 }
-                if (element.sportType == 'swim') {
+                if (element.sportType.indexOf('swim')!=-1) {
                     state.Swim.push(element);
                 }
-                if (element.sportType == 'football') {
+                if (element.sportType.indexOf('football')!=-1) {
                     state.Footbal.push(element);
                 }
-                if (element.sportType == 'ride') {
+                if (element.sportType.indexOf('ride')!=-1) {
                     state.Ride.push(element);
                 }
-                if (element.sportType == 'baseketball') {
+                if (element.sportType.indexOf('basketball')!=-1) {
                     state.Basketball.push(element);
                 }
-                if (element.sportType == 'yoga') {
+                if (element.sportType.indexOf('yoga')!=-1) {
                     state.Yoga.push(element);
                 }
-                if (element.sportType == 'walk') {
+                if (element.sportType.indexOf('walk')!=-1) {
                     state.Walk.push(element);
                 }
             });

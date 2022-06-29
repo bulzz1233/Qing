@@ -20,17 +20,18 @@
                     <div class="icon_layout" >
                         <a
                             href="#"
-                            @click.prevent="UserStar(o, index)"
+                            @click.prevent="UserStar(o)"
                             class="el-icon-star-off icon"
-                            v-show="!o.isStar"
+                            v-show="!o.sportStar"
                         >
                             <span>{{ o.sportLikes }}</span>
                         </a>
                         <a
                             href="#"
-                            @click.prevent="CancelStar(o, index)"
+                            @click.prevent="UserStar(o)"
                             class="el-icon-star-on icon"
-                            v-show="o.isStar"
+                                                        v-show="o.sportStar"
+
                         >
                             <span>{{ o.sportLikes }}</span>
                         </a>
@@ -55,29 +56,26 @@ export default {
     data() {
         return {
             imgdata: 'a.jpg',
-            
+            uid:''
         };
     },
     methods: {
         //收藏功能
-        UserStar(o, index) {
-            this.$set(this.fate, index, {
-                id: o.id,
-                title: o.title,
-                img: o.img,
-                star: o.star + 1,
-                isStar: !o.isStar,
-            });
+UserStar(o, index) {
+            let obj = {
+                userId : this.uid,
+                sid:o.sid
+            }
+            this.$store.dispatch('ucardData/UserLikes', JSON.stringify(obj));
+
+            this.$set(o, 'sportStar', !o.sportStar);
+            if (o.sportStar) {
+                this.$set(o, 'sportLikes', parseInt(o.sportLikes) + 1);
+            } else {
+                this.$set(o, 'sportLikes', parseInt(o.sportLikes) - 1);
+            }
         },
-        CancelStar(o, index) {
-            this.$set(this.Ttest, index, {
-                id: o.id,
-                title: o.title,
-                img: o.img,
-                star: o.star - 1,
-                isStar: !o.isStar,
-            });
-        },
+        
         card_loading(time) {
             let options = {
                 fullscreen: true,
@@ -95,7 +93,27 @@ export default {
         },
     },
     props: ['o','title'],
-    mounted() {},
+    mounted() {
+         this.$nextTick(()=>{
+            if (localStorage.getItem('user_data')) {
+            let i;
+            i = JSON.parse(localStorage.getItem('user_data')).uid;
+            this.uid=i
+            let obj = {
+                userId: i,
+            };
+            this.$store.dispatch('ucardData/AllLikes', JSON.stringify(obj));
+        }
+        })
+        let arr=this.$store.state.ucardData.Likes
+        for(let i = 0; i<arr.length;i++){
+        
+                if(this.o.sid==arr[i]){
+                this.$set(this.o, 'sportStar',1 );
+            };
+        }
+
+    },
 };
 </script>
 

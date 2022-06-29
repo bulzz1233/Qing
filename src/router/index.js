@@ -26,7 +26,12 @@ const router = new VueRouter({
                     meta: { title: '登录' },
                     component:()=>import('../pages/login.vue'),
                 },
-
+                {
+                    path: 'edit',
+                    name: 'edit',
+                    meta: { title: '编辑资料' },
+                    component:()=>import('../pages/edit.vue'),
+                },
                 {
                     path: 'addCalendar',
                     name: 'addCalendar',
@@ -109,6 +114,34 @@ const router = new VueRouter({
                         },
                     ]
                 },
+                {
+                    path: 'Likes',
+                    name: 'Likes',
+                    component:()=>import('../pages/Likes.vue'),
+                    children:[
+                        {
+                            path: 'addCalendar',
+                            name: 'addCalendar',
+                            meta: { title: '添加训练' },
+                            component:()=>import('../pages/addCalendar.vue'),
+                        },
+                        {
+                            path: 'details',
+                            name: 'details',
+                            meta: { title: '详情' },
+                            component:()=>import('../pages/details.vue'),
+        
+                            children: [
+        
+                                {
+                                    path: 'study',
+                                    name: 'study',
+                                    component:()=>import('../pages/study.vue'),
+                                },
+                            ],
+                        },
+                    ]
+                },
                 
             ],
         },
@@ -122,7 +155,7 @@ const router = new VueRouter({
 // 前置路由守卫
     router.beforeEach((to,from,next)=>{
         const token = localStorage.getItem('token')
-        if(to.name!=='login'&&to.name!=='mainpage'&&to.name!=='home'&&to.name!=='register'&&!token){
+        if(to.name!='login'&&to.name!='mainpage'&&to.name!='/'&&to.name!='register'&&!token){
             next({name:'login'})
         }else next()
         if(token&&to.name=='login'||from.name=='login'&&to.name=='login'){

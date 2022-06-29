@@ -10,7 +10,14 @@
                 <div class="none"></div>
             </li>
             <li class="ucard_layout">
-                <morecard class="ucard" v-for="(o, index) in more_data" :key="index" :o="o" :title="$route.query.title" />
+                <morecard
+                    class="ucard"
+                    v-for="(o, index) in more_data"
+                    :key="index"
+                    :o="o"
+                    :title="$route.query.title"
+                    :uid="uid"
+                />
                 <div class="none"></div>
             </li>
         </ul>
@@ -22,7 +29,9 @@ import Morecard from '../components/Morecard .vue';
 
 export default {
     data() {
-        return {};
+        return {
+            uid: '',
+        };
     },
     computed: {
         more_data() {
@@ -42,48 +51,52 @@ export default {
                 return arr;
             }
             if (this.$route.query.title == '跑步') {
-                                let arr = [];
+                let arr = [];
                 arr = this.$store.state.runData.Run;
                 return arr;
             }
             if (this.$route.query.title == '游泳') {
-                                let arr = [];
+                let arr = [];
                 arr = this.$store.state.runData.Swim;
                 return arr;
             }
             if (this.$route.query.title == '足球') {
-                                let arr = [];
+                let arr = [];
                 arr = this.$store.state.runData.Football;
                 return arr;
             }
             if (this.$route.query.title == '骑行') {
-                                let arr = [];
+                let arr = [];
                 arr = this.$store.state.runData.Ride;
                 return arr;
             }
             if (this.$route.query.title == '篮球') {
-                                let arr = [];
+                let arr = [];
                 arr = this.$store.state.runData.Baseketball;
                 return arr;
             }
             if (this.$route.query.title == '瑜伽') {
-                                let arr = [];
+                let arr = [];
                 arr = this.$store.state.runData.Yoga;
                 return arr;
             }
             if (this.$route.query.title == '行走') {
-                                let arr = [];
+                let arr = [];
                 arr = this.$store.state.runData.Walk;
                 return arr;
             }
         },
     },
     components: {
-        
         Morecard,
     },
-    beforeCreate(){
-    }
+    beforeCreate() {
+        if (localStorage.getItem('user_data')) {
+            let i;
+            i = JSON.parse(localStorage.getItem('user_data')).uid;
+            this.uid = i;
+        }
+    },
 };
 </script>
 
@@ -101,12 +114,11 @@ export default {
     position: absolute;
     top: 4rem;
 }
-.ucard_layout{
+.ucard_layout {
     display: flex;
     margin-top: 1.25rem;
-    margin-left: .9375rem;
+    margin-left: 0.9375rem;
     flex-wrap: wrap;
-    
 }
 .head_layout {
     position: relative;

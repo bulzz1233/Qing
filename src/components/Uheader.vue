@@ -1,7 +1,7 @@
 <template>
     <div class="head">
         <div class="none"></div>
-        <ul class="list_1" @click="card_loading(500)">
+        <ul class="list_1" @click="card_loading(2000)">
             <li class="li_1">轻运动</li>
             <li><router-link replace to="/mainpage">首页</router-link></li>
             <li v-for="(t, index) in head_list" :key="index">
@@ -87,7 +87,7 @@
                     @mouseleave="userMsg_show = false"
                 >
                     <div class="head_portrait" :class="a">
-                        <img class="head_portrait_img" src="../assets/img/12.jpg" alt="" />
+                        <img class="head_portrait_img" src="../assets/img/12.png" alt="" />
                     </div>
 
                     <transition name="fade">
@@ -100,23 +100,23 @@
                             <center>
                                 <div class="username">{{ user_name }}</div>
                             </center>
-                            <div class="box" @click="card_loading(500)">
-                                <router-link replace to="/mainpage" class="meum_layout">
+                            <div class="box" @click="card_loading(2000)">
+                                <router-link replace to="/mainpage/Likes" class="meum_layout">
                                     <span class="el-icon-star-off icon"></span>
                                     <span>我的收藏</span>
                                 </router-link>
                             </div>
-                            <div class="box" @click="card_loading(500)">
+                            <div class="box" @click="card_loading(2000)">
                                 <router-link replace to="/mainpage/planChart" class="meum_layout">
                                     <span class="el-icon-finished icon"></span>
                                     <span>我的计划</span>
                                 </router-link>
                             </div>
-                            <div class="box" @click="card_loading(500)">
-                                <a class="meum_layout" href="">
+                            <div class="box" @click="card_loading(2000)">
+                                <router-link replace to="/mainpage/edit" class="meum_layout" >
                                     <span class="el-icon-edit icon"></span>
                                     <span>编辑资料</span>
-                                </a>
+                                </router-link>
                             </div>
                             <div class="box" @click="outLogin">
                                 <a class="meum_layout" href="javascript:;">

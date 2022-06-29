@@ -1,3 +1,4 @@
+import { MessageBox } from 'element-ui';
 import * as $api from '../api/index'
 export default {
     name: 'userData',
@@ -34,7 +35,19 @@ export default {
                     alert(error.message);
                 }
             );
+        },
+        ToUpdate(context,value){
+            $api.update.update(value).then(
+                response => {
+                    
+                    MessageBox.alert("修改成功","提示")
+                },
+                error => {
+                    alert(error.message);
+                }
+            )
         }
+
     },
     mutations: {
             //添加

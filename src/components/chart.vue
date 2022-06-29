@@ -82,25 +82,25 @@ export default {
         let arry = [];
         arry = this.chart_data;
         arry.forEach(element => {
-            if (element.sportType == 'run') {
+            if (element.sportType.indexOf('run')!=-1) {
                 run++;
             }
-            if (element.sportType == 'swim') {
+            if (element.sportType.indexOf('swim')!=-1) {
                 swim++;
             }
-            if (element.sportType == 'football') {
+            if (element.sportType.indexOf('football')!=-1) {
                 football++;
             }
-            if (element.sportType == 'ride') {
+            if (element.sportType.indexOf('ride')!=-1) {
                 ride++;
             }
-            if (element.sportType == 'baseketball') {
+            if  (element.sportType.indexOf('basketball')!=-1) {
                 baseketball++;
             }
-            if (element.sportType == 'yoga') {
+            if (element.sportType.indexOf('yoga')!=-1) {
                 yoga++;
             }
-            if (element.sportType == 'walk') {
+            if (element.sportType.indexOf('walk')!=-1) {
                 walk++;
             }
         });
