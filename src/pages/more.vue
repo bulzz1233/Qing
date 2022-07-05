@@ -72,7 +72,7 @@ export default {
             }
             if (this.$route.query.title == '篮球') {
                 let arr = [];
-                arr = this.$store.state.runData.Baseketball;
+                arr = this.$store.state.runData.Basketball;
                 return arr;
             }
             if (this.$route.query.title == '瑜伽') {

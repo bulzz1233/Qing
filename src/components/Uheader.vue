@@ -1,11 +1,11 @@
 <template>
     <div class="head">
         <div class="none"></div>
-        <ul class="list_1" @click="card_loading(2000)">
+        <ul class="list_1">
             <li class="li_1">轻运动</li>
-            <li><router-link replace to="/mainpage">首页</router-link></li>
+            <li><router-link replace to="/mainpage"  @click="card_loading(2000)">首页</router-link></li>
             <li v-for="(t, index) in head_list" :key="index">
-                <router-link replace :to="`/mainpage/more?title=${t}`">{{ t }}</router-link>
+                <router-link  @click="card_loading(2000)" replace :to="`/mainpage/more?title=${t}`">{{ t }}</router-link>
             </li>
         </ul>
 
@@ -139,7 +139,7 @@ export default {
     name: 'Uheader',
     data() {
         return {
-            head_list: ['跑步', '游泳', '足球', '骑行', '篮球', '瑜伽', '行走', '课程', '更多'],
+            head_list: ['篮球','跑步','瑜伽', '游泳', '足球', '骑行', '行走', '课程', '更多'],
             // app二维码展示
             show: false,
             // 登录后显示

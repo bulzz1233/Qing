@@ -53,7 +53,7 @@ export default {
                     state.Swim.push(element);
                 }
                 if (element.sportType.indexOf('football')!=-1) {
-                    state.Footbal.push(element);
+                    state.Football.push(element);
                 }
                 if (element.sportType.indexOf('ride')!=-1) {
                     state.Ride.push(element);

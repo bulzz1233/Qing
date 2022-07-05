@@ -7,7 +7,7 @@
                     :to="`/mainpage/more/Moredetails?detail=${JSON.stringify(o)}&title=${title}`"
                     class="img"
                 >
-                    <img v-lazyload="o.sportPic" src="" width="100%" height="100%" />
+                    <img :src="require('@/assets/img/' +o.sportPic)" width="100%" height="100%" />
                 </router-link>
                 <div class="detail">
                     <router-link

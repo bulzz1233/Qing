@@ -6,7 +6,7 @@
                     <div @click="show_plan(t)" class="date_style">{{ t }}</div>
                 </template>
                 <ul>
-                    <li class="text" v-for="v in thisList" :key="v.planId">{{v.sportName}}</li>
+                    <li class="text" v-for="(v,index) in thisList" :key="index">{{v.sportName}}</li>
                 </ul>
             </el-collapse-item>
         </el-collapse>

@@ -73,6 +73,10 @@ export default {
     flex-wrap: wrap;
     
 }
+.ucard{
+    margin-left: .9375rem;
+
+}
 .head_layout {
     position: relative;
     background: white;
