@@ -46,14 +46,14 @@ export default {
             }
         },
     },
-    beforeCreate() {
+    async created() {
         if (localStorage.getItem('user_data')) {
             let i;
             i = JSON.parse(localStorage.getItem('user_data')).uid;
             let obj = {
                 userId: i,
             };
-            this.$store.dispatch('ucardData/AllLikes', JSON.stringify(obj));
+            await this.$store.dispatch('ucardData/AllLikes', JSON.stringify(obj));
         }
     },
     mounted() {

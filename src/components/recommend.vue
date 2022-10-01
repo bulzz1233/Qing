@@ -243,7 +243,7 @@ export default {
             });
         },
     },
-    beforeCreate() {
+    async created() {
         if (localStorage.getItem('user_data')) {
             let i = JSON.parse(localStorage.getItem('user_data')).uid;
             let planobj = {
@@ -252,8 +252,8 @@ export default {
             let obj1 = {
                 userId: i,
             };
-            this.$store.dispatch('calendarData/AllPlan', JSON.stringify(planobj));
-            this.$store.dispatch('calendarData/Allfinish', JSON.stringify(obj1));
+            await this.$store.dispatch('calendarData/AllPlan', JSON.stringify(planobj));
+            await this.$store.dispatch('calendarData/Allfinish', JSON.stringify(obj1));
         }
     },
     mounted() {

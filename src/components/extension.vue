@@ -11,7 +11,13 @@
             </li>
             <!-- 卡片遍历 -->
             <li class="ucard_layout">
-                <ucard class="ucard" v-for="(o,index) in young_data" :key="index" :o="o" :uid="uid" />
+                <ucard
+                    class="ucard"
+                    v-for="(o, index) in young_data"
+                    :key="index"
+                    :o="o"
+                    :uid="uid"
+                />
                 <div class="none"></div>
             </li>
         </ul>
@@ -91,23 +97,23 @@ export default {
             });
         },
     },
-    beforeCreate() {
+    async created() {
         let obj1 = {
             fit: 'young',
         };
-        this.$store.dispatch('runData/SearchByFit', JSON.stringify(obj1));
         let obj2 = {
             fit: 'mid',
         };
-        this.$store.dispatch('runData/SearchByFit', JSON.stringify(obj2));
         let obj3 = {
             fit: 'old',
         };
-        this.$store.dispatch('runData/SearchByFit', JSON.stringify(obj3));
-        this.$store.dispatch('runData/AllSport');
+
+        await this.$store.dispatch('runData/SearchByFit', JSON.stringify(obj1));
+        await this.$store.dispatch('runData/SearchByFit', JSON.stringify(obj2));
+        await this.$store.dispatch('runData/SearchByFit', JSON.stringify(obj3));
+        await this.$store.dispatch('runData/AllSport');
     },
     mounted() {
-        
         this.young_data = this.$store.state.runData.Young;
         this.mid_data = this.$store.state.runData.Mid;
         this.old_data = this.$store.state.runData.Old;
@@ -132,10 +138,10 @@ ul {
     padding: 0;
 }
 .ucard_layout {
+    flex: 3;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    justify-content:flex-start;
+    flex-wrap:wrap;
     overflow: hidden;
     margin: 1.25rem;
 }
@@ -151,7 +157,8 @@ ul {
     max-width: 3%;
 }
 .ucard {
-    flex: 9;
+    flex: 16.6%;
+    
 }
 .head {
     font-family: zhongwen1;

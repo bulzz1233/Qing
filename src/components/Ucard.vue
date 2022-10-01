@@ -130,12 +130,12 @@ export default {
 .box {
     display: flex;
     height: 12.5rem;
-    width: 12.5rem;
+    width: 11.25rem;
     max-height: 200px;
     max-width: 250px;
     position: relative;
     min-height: 150px;
-    min-width: 200px;
+    min-width: 185px;
     flex-direction: column;
     border-radius: 10px;
 }

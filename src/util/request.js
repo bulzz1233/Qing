@@ -4,7 +4,7 @@ import qs from 'qs'
 axios.defaults.headers["Content-Type"]="application/json"
 const request = axios.create({
     baseURL: '/api',
-    timeout: 5000,
+    timeout: 10000,
 });
 //请求拦截器
 request.interceptors.request.use((config)=>{

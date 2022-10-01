@@ -36,7 +36,7 @@ export default {
             $api.delplan.delplan(value).then(
                 result => {
                     //接收存储用户信息
-                    
+
                     context.commit('DelPlan', JSON.parse(value));
 
                     MessageBox.alert('删除成功', '提示');
@@ -46,43 +46,41 @@ export default {
                 }
             );
         },
-        UpdatePlan(context,value){
+        UpdatePlan(context, value) {
             $api.updateplan.updateplan(value).then(
                 result => {
                     //接收存储用户信息
-                    
+
                     //context.commit('DelPlan', JSON.parse(value));
-                    console.log("修改成功")
-                   // MessageBox.alert('已完成', '提示');
+                    console.log('修改成功');
+                    // MessageBox.alert('已完成', '提示');
                 },
                 error => {
                     console.log(error.message);
                 }
-            )
+            );
         },
-        Allfinish(context,value){
+        Allfinish(context, value) {
             $api.allfinish.allfinish(value).then(
-                result=>{
+                result => {
                     context.commit('Allfinish', result.data);
-
                 },
-                error=>{
-                    console.log(error.message)
+                error => {
+                    console.log(error.message);
                 }
-            )
+            );
         },
-        Addfinish(context,value){
-            console.log(value)
+        Addfinish(context, value) {
+            console.log(value);
             $api.addfinish.addfinish(value).then(
-                
-                result=>{
-                    console.log("打卡成功")
+                result => {
+                    console.log('打卡成功');
                 },
-                error=>{
-                    console.log(error.message)
+                error => {
+                    console.log(error.message);
                 }
-            )
-        }
+            );
+        },
     },
     mutations: {
         addTodoList(state, obj) {
@@ -94,11 +92,9 @@ export default {
             });
         },
         DelPlan(state, obj) {
-            state.Plan.forEach((item, index,array) => {
-                
+            state.Plan.forEach((item, index, array) => {
                 if (item.planId == obj.pid) {
                     array.splice(index, 1);
-                    
                 }
             });
 
@@ -108,20 +104,20 @@ export default {
             // });
             // state.Plan = u
         },
-        Allfinish(state,obj){
-            let i=0
-            obj.forEach(element=>{
-                state.FinishDate.push(element.finishDate)
-                i++
-            })
-            state.FinishDay = i
-        }
+        Allfinish(state, obj) {
+            let i = 0;
+            obj.forEach(element => {
+                state.FinishDate.push(element.finishDate);
+                i++;
+            });
+            state.FinishDay = i;
+        },
     },
     state: {
         // 待做事项
         Plan: [],
         Test: [],
-        FinishDate:[],
-        FinishDay:0
+        FinishDate: [],
+        FinishDay: 0,
     },
 };

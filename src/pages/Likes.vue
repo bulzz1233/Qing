@@ -39,7 +39,7 @@ export default {
         components: {
         Ucard,
     },
-    beforeCreate(){
+    created(){
         if (localStorage.getItem('user_data')) {
             let i;
             i = JSON.parse(localStorage.getItem('user_data')).uid;
