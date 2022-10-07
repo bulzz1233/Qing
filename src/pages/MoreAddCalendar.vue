@@ -75,8 +75,8 @@ export default {
             params: JSON.parse(this.$route.query.detail),
             ruleForm: {
                 name: JSON.parse(this.$route.query.detail).sportName,
-                type:JSON.parse(this.$route.query.detail).sportType,
-                
+                type: JSON.parse(this.$route.query.detail).sportType,
+
                 date: '',
                 interval: '',
                 reminder: false,
@@ -120,7 +120,7 @@ export default {
                 ],
                 disabledDate: time => {
                     let Tdate = new Date();
-                    return time.getTime() <Tdate.getTime()- 8.64e7;
+                    return time.getTime() < Tdate.getTime() - 8.64e7;
                 },
             },
         };
@@ -145,7 +145,7 @@ export default {
                         var obj = {
                             userId: this.uid,
                             sportName: this.ruleForm.name,
-                            sportType:this.ruleForm.type,
+                            sportType: this.ruleForm.type,
                             planDate: year + '/' + month + '/' + day,
                             planInterval: this.ruleForm.interval,
                             planContent: this.ruleForm.name,
@@ -165,8 +165,7 @@ export default {
                     //console.log(JSON.stringify(listobj))
                     this.$store.dispatch('calendarData/ToAddPlan', JSON.stringify(listobj));
                     this.$router.replace({
-                
-                        path:"/mainpage/more?title="+this.title
+                        path: '/mainpage/more?title=' + this.title,
                     });
                 } else {
                     console.log('error submit!!');

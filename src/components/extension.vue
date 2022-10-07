@@ -96,22 +96,18 @@ export default {
                 },
             });
         },
+        
     },
-    async created() {
+    created() {
         let obj1 = {
             fit: 'young',
         };
-        let obj2 = {
-            fit: 'mid',
-        };
-        let obj3 = {
-            fit: 'old',
-        };
 
-        await this.$store.dispatch('runData/SearchByFit', JSON.stringify(obj1));
-        await this.$store.dispatch('runData/SearchByFit', JSON.stringify(obj2));
-        await this.$store.dispatch('runData/SearchByFit', JSON.stringify(obj3));
-        await this.$store.dispatch('runData/AllSport');
+        const i = async ()=> {
+            await this.$store.dispatch('runData/SearchByFit', JSON.stringify(obj1));
+            await this.$store.dispatch('runData/AllSport');
+        }
+        i()
     },
     mounted() {
         this.young_data = this.$store.state.runData.Young;
@@ -140,8 +136,8 @@ ul {
 .ucard_layout {
     flex: 3;
     display: flex;
-    justify-content:flex-start;
-    flex-wrap:wrap;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     overflow: hidden;
     margin: 1.25rem;
 }
@@ -158,7 +154,6 @@ ul {
 }
 .ucard {
     flex: 16.6%;
-    
 }
 .head {
     font-family: zhongwen1;

@@ -1,13 +1,8 @@
 <template>
     <div class="mainpage">
         <el-backtop class="toTop"></el-backtop>
-        <transition
-            name="custom-classes-transition"
-            enter-active-class="animate__animated animate__fadeIn"
-            leave-active-class="animate__animated animate__fadeOut"
-        >
+
             <router-view></router-view>
-        </transition>
         <uheader />
         <recommend v-show="mainShow" />
         <extension v-show="mainShow" />
@@ -37,8 +32,8 @@ export default {
                 this.$route.path.indexOf('more') == -1 &&
                 this.$route.path.indexOf('planChart') == -1 &&
                 this.$route.path.indexOf('searchResult') == -1 &&
-                this.$route.path.indexOf('edit') == -1&&
-                this.$route.path.indexOf('Likes')==-1
+                this.$route.path.indexOf('edit') == -1 &&
+                this.$route.path.indexOf('Likes') == -1
             ) {
                 return true;
             } else {
@@ -46,30 +41,40 @@ export default {
             }
         },
     },
-    async created() {
+    created() {
         if (localStorage.getItem('user_data')) {
             let i;
             i = JSON.parse(localStorage.getItem('user_data')).uid;
             let obj = {
                 userId: i,
             };
+            const msg =async ()=>{
             await this.$store.dispatch('ucardData/AllLikes', JSON.stringify(obj));
+                
+            }
+            msg()
         }
     },
     mounted() {
-        let options = {
-            fullscreen: true,
-            text: '请稍后',
-            background: 'white',
-        };
-        let loadingInstance = Loading.service(options);
-        //         this.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
-        //         loadingInstance.close();
-        // });
-        setTimeout(() => {
-            loadingInstance.close();
+        
+        const loading = () => {
+            let options = {
+                fullscreen: true,
+                text: '请稍后',
+                background: 'white',
+            };
+            let loadingInstance = Loading.service(options);
+            //         this.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
+            //         loadingInstance.close();
             // });
-        }, 2000);
+            setTimeout(() => {
+                loadingInstance.close();
+                // });
+            }, 2000);
+        };
+        this.$nextTick(()=>{
+            loading()
+        })
     },
 };
 </script>

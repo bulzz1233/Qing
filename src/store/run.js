@@ -31,15 +31,16 @@ export default {
         }
     },
     mutations: {
+        
         addYoung(state, obj) {
             obj.forEach(element => {
-                if (element.sportFit.indexOf('young')!=-1) {
+                if (element.sportFit.includes('young')) {
                     state.Young.push(element);
                 }
-                if (element.sportFit.indexOf('mid')!=-1) {
+                if (element.sportFit.includes('mid')) {
                     state.Mid.push(element);
                 }
-                if (element.sportFit.indexOf('old')!=-1) {
+                if (element.sportFit.includes('old')) {
                     state.Old.push(element);
                 }
             });

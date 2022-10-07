@@ -88,7 +88,7 @@ export default {
     },
 
     methods: {
-        submitForm(formName) {
+         submitForm(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     //let from = JSON.stringify(this.ruleForm);

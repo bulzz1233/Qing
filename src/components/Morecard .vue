@@ -1,5 +1,5 @@
 <template>
-    <div class="card" >
+    <div class="card">
         <ul class="card_layout">
             <li class="box">
                 <router-link
@@ -7,17 +7,19 @@
                     :to="`/mainpage/more/Moredetails?detail=${JSON.stringify(o)}&title=${title}`"
                     class="img"
                 >
-                    <img :src="require('@/assets/img/' +o.sportPic)" width="100%" height="100%" />
+                    <img :src="require('@/assets/img/' + o.sportPic)" width="100%" height="100%" />
                 </router-link>
                 <div class="detail">
                     <router-link
                         replace
-                        :to="`/mainpage/more/Moredetails?detail=${JSON.stringify(o)}&title=${title}`"
+                        :to="`/mainpage/more/Moredetails?detail=${JSON.stringify(
+                            o
+                        )}&title=${title}`"
                         class="title"
                     >
                         {{ o.sportName }}
                     </router-link>
-                    <div class="icon_layout" >
+                    <div class="icon_layout">
                         <a
                             href="#"
                             @click.prevent="UserStar(o)"
@@ -30,15 +32,16 @@
                             href="#"
                             @click.prevent="UserStar(o)"
                             class="el-icon-star-on icon"
-                                                        v-show="o.sportStar"
-
+                            v-show="o.sportStar"
                         >
                             <span>{{ o.sportLikes }}</span>
                         </a>
 
                         <router-link
                             replace
-                            :to="`/mainpage/more/MoreAddCalendar?detail=${JSON.stringify(o)}&title=${title}`"
+                            :to="`/mainpage/more/MoreAddCalendar?detail=${JSON.stringify(
+                                o
+                            )}&title=${title}`"
                             class="el-icon-circle-plus-outline icon add_plan"
                         ></router-link>
                     </div>
@@ -56,16 +59,16 @@ export default {
     data() {
         return {
             imgdata: 'a.jpg',
-            uid:''
+            uid: '',
         };
     },
     methods: {
         //收藏功能
-UserStar(o, index) {
+        UserStar(o, index) {
             let obj = {
-                userId : this.uid,
-                sid:o.sid
-            }
+                userId: this.uid,
+                sid: o.sid,
+            };
             this.$store.dispatch('ucardData/UserLikes', JSON.stringify(obj));
 
             this.$set(o, 'sportStar', !o.sportStar);
@@ -75,7 +78,7 @@ UserStar(o, index) {
                 this.$set(o, 'sportLikes', parseInt(o.sportLikes) - 1);
             }
         },
-        
+
         card_loading(time) {
             let options = {
                 fullscreen: true,
@@ -92,27 +95,26 @@ UserStar(o, index) {
             }, time);
         },
     },
-    props: ['o','title'],
+    props: ['o', 'title'],
     mounted() {
-         this.$nextTick(()=>{
+        this.$nextTick(async () => {
             if (localStorage.getItem('user_data')) {
-            let i;
-            i = JSON.parse(localStorage.getItem('user_data')).uid;
-            this.uid=i
-            let obj = {
-                userId: i,
-            };
-            this.$store.dispatch('ucardData/AllLikes', JSON.stringify(obj));
+                let i;
+                i = JSON.parse(localStorage.getItem('user_data')).uid;
+                this.uid = i;
+                let obj = {
+                    userId: i,
+                };
+                await this.$store.dispatch('ucardData/AllLikes', JSON.stringify(obj));
+            }
+            
+        });
+        let arr = this.$store.state.ucardData.Likes;
+        for (let i = 0; i < arr.length; i++) {
+            if (this.o.sid == arr[i]) {
+                this.$set(this.o, 'sportStar', 1);
+            }
         }
-        })
-        let arr=this.$store.state.ucardData.Likes
-        for(let i = 0; i<arr.length;i++){
-        
-                if(this.o.sid==arr[i]){
-                this.$set(this.o, 'sportStar',1 );
-            };
-        }
-
     },
 };
 </script>

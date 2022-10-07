@@ -1,12 +1,52 @@
 import VueRouter from 'vue-router';
+const dev=/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
+const redirectPath = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
+    ? '/m_mainPage/m_home'
+    : 'mainpage';
+
+
 const router = new VueRouter({
     routes: [
-        // {
-        //     path:'/login',
-        //     name:'login',
-        //     component:login
-        // },
+        {
+            path: '/',
+            name: 're',
+            redirect: redirectPath,
+        },
         //动态加载组件，以箭头函数形式
+        {
+            path: '/m_mainPage',
+            name: 'm_mainPage',
+            meta: { type: 'mobile' },
+            component: () => import('../components/mobile/m_mainPage.vue'),
+            children:[
+                {
+                    path:'m_user',
+                    name:'m_user',
+                    meta:{title:'我的',type:'mobile'},
+                    component:()=>import('../components/mobile/mid/m_user')
+                },
+                {
+                    path:'m_home',
+                    name:'m_home',
+                    meta:{title:'主页',type:'mobile'},
+                    component:()=>import('../components/mobile/mid/m_home'),
+                    children:[
+                        {
+                            path:'view',
+                            name:'view',
+                            meta:{title:'我的',type:'mobile'},
+                            component:()=>import('../pages/mobile/card_view')
+                        }
+                    ]
+                },
+                {
+                    path:'m_calendar',
+                    name:'m_calendar',
+                    meta:{title:'日历',type:'mobile'},
+                    component:()=>import('../components/mobile/mid/m_calendar.vue')
+                }
+            ]
+        },
         {
             path: '/mainpage',
             name: 'mainpage',
@@ -61,14 +101,14 @@ const router = new VueRouter({
                         {
                             path: 'Moredetails',
                             name: 'Moredetails',
-                            meta: { title: '详情',type:'pc'},
+                            meta: { title: '详情', type: 'pc' },
                             component: () => import('../pages/MoreDetails.vue'),
 
                             children: [
                                 {
                                     path: 'study',
-                                    name: 'study',
-                                    meta: { title: '详情',type:'pc'},
+                                    name: 'mstudy',
+                                    meta: { title: '详情', type: 'pc' },
 
                                     component: () => import('../pages/study.vue'),
                                 },
@@ -77,7 +117,7 @@ const router = new VueRouter({
                         {
                             path: 'MoreAddCalendar',
                             name: 'MoreAddCalendar',
-                            meta: { title: '添加训练',type:'pc' },
+                            meta: { title: '添加训练', type: 'pc' },
                             component: () => import('../pages/MoreAddCalendar.vue'),
                         },
                     ],
@@ -85,32 +125,32 @@ const router = new VueRouter({
                 {
                     path: 'planChart',
                     name: 'planChart',
-                    meta:{type:'pc'},
+                    meta: { type: 'pc' },
                     component: () => import('../pages/planChart.vue'),
                 },
                 {
                     path: 'searchResult',
                     name: 'searchResult',
-                    meta:{type:'pc'},
+                    meta: { type: 'pc' },
 
                     component: () => import('../pages/searchResult.vue'),
                     children: [
                         {
                             path: 'addCalendar',
-                            name: 'addCalendar',
-                            meta: { title: '添加训练',type:"pc"},
+                            name: 'saddCalendar',
+                            meta: { title: '添加训练', type: 'pc' },
                             component: () => import('../pages/addCalendar.vue'),
                         },
                         {
                             path: 'details',
-                            name: 'details',
-                            meta: { title: '详情',type:"pc"},
+                            name: 'sdetails',
+                            meta: { title: '详情', type: 'pc' },
                             component: () => import('../pages/details.vue'),
 
                             children: [
                                 {
                                     path: 'study',
-                                    name: 'study',
+                                    name: 'sstudy',
                                     component: () => import('../pages/study.vue'),
                                 },
                             ],
@@ -120,26 +160,26 @@ const router = new VueRouter({
                 {
                     path: 'Likes',
                     name: 'Likes',
-                    meta:{type:'pc'},
+                    meta: { type: 'pc' },
                     component: () => import('../pages/Likes.vue'),
                     children: [
                         {
                             path: 'addCalendar',
-                            name: 'addCalendar',
-                            meta: { title: '添加训练',type:'pc'},
+                            name: 'laddCalendar',
+                            meta: { title: '添加训练', type: 'pc' },
                             component: () => import('../pages/addCalendar.vue'),
                         },
                         {
                             path: 'details',
-                            name: 'details',
-                            meta: { title: '详情',type:'pc' },
+                            name: 'ldetails',
+                            meta: { title: '详情', type: 'pc' },
                             component: () => import('../pages/details.vue'),
 
                             children: [
                                 {
                                     path: 'study',
-                                    name: 'study',
-                                    meta:{type:'pc'},
+                                    name: 'lstudy',
+                                    meta: { type: 'pc' },
                                     component: () => import('../pages/study.vue'),
                                 },
                             ],
@@ -161,7 +201,7 @@ router.beforeEach((to, from, next) => {
     if (
         to.name != 'login' &&
         to.name != 'mainpage' &&
-        this.$route.path == '/' &&
+        window.location.hash == '/' &&
         to.name != 'register' &&
         !token
     ) {
@@ -176,6 +216,15 @@ router.beforeEach((to, from, next) => {
     if (from.name != 'login' && to.name == 'register') {
         next({ name: 'login' });
     } else next();
+    if(dev&&to.meta.type!=='mobile'){
+        next({name:'re'})
+    }
+    if(!dev&&to.meta.type!=='pc'){
+        next({name:'re'})
+    }
+    if(to.name=='m_mainPage'){
+        next({name:'re'})
+    }
 });
 // 后置路由守卫
 router.afterEach((to, from) => {

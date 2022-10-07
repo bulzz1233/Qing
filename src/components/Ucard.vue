@@ -102,14 +102,14 @@ export default {
         },
     },
     mounted(){
-        this.$nextTick(()=>{
+        this.$nextTick( async ()=>{
             if (localStorage.getItem('user_data')) {
             let i;
             i = JSON.parse(localStorage.getItem('user_data')).uid;
             let obj = {
                 userId: i,
             };
-            this.$store.dispatch('ucardData/AllLikes', JSON.stringify(obj));
+            await this.$store.dispatch('ucardData/AllLikes', JSON.stringify(obj));
         }
         })
         let arr=this.$store.state.ucardData.Likes

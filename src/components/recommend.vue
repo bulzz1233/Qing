@@ -198,9 +198,9 @@ export default {
                     userId: t.userId,
                     finishDate: t.planDate,
                 };
-                console.log(obj1)
+                console.log(obj1);
                 this.$store.dispatch('calendarData/Addfinish', JSON.stringify(obj1));
-                this.thisDay=this.thisDay + 1
+                this.thisDay = this.thisDay + 1;
                 MessageBox.alert('恭喜完成今日打卡');
                 this.finsh_show = true;
             }
@@ -243,7 +243,7 @@ export default {
             });
         },
     },
-    async created() {
+    created() {
         if (localStorage.getItem('user_data')) {
             let i = JSON.parse(localStorage.getItem('user_data')).uid;
             let planobj = {
@@ -252,8 +252,11 @@ export default {
             let obj1 = {
                 userId: i,
             };
-            await this.$store.dispatch('calendarData/AllPlan', JSON.stringify(planobj));
-            await this.$store.dispatch('calendarData/Allfinish', JSON.stringify(obj1));
+            const msg = async ()=> {
+                await this.$store.dispatch('calendarData/AllPlan', JSON.stringify(planobj));
+                await this.$store.dispatch('calendarData/Allfinish', JSON.stringify(obj1));
+            }
+                msg()
         }
     },
     mounted() {
@@ -274,7 +277,7 @@ export default {
         if (localStorage.getItem('token') != null) {
             this.afterLogin_show = true;
         }
-        this.thisDay = this.$store.state.calendarData.FinishDay
+        this.thisDay = this.$store.state.calendarData.FinishDay;
     },
 };
 </script>

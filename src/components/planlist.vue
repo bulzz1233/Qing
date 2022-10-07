@@ -40,13 +40,16 @@ export default {
         },
     },
     beforeCreate() {
-        if (this.$store.state.calendarData.Plan == null) {
+        const i = async ()=>{
+            if (this.$store.state.calendarData.Plan == null) {
             let i = JSON.parse(localStorage.getItem('user_data')).uid;
             let planobj = {
                 uid: i,
             };
-            this.$store.dispatch('calendarData/AllPlan', JSON.stringify(planobj));
+            await this.$store.dispatch('calendarData/AllPlan', JSON.stringify(planobj));
         }
+        }
+        
     },
     mounted() {
         this.$nextTick(() => {

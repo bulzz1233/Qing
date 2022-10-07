@@ -1,6 +1,6 @@
 <template>
-      <div>
-          <router-view></router-view>
+    <div>
+        <router-view></router-view>
         <ul class="ul_layout">
             <li class="head_layout">
                 <div class="head">
@@ -21,35 +21,38 @@
 import Ucard from '../components/Ucard.vue';
 
 export default {
-        computed:{
-            LikesData(){
-                let likesArry=this.$store.state.ucardData.Likes
-                let sportArry=this.$store.state.runData.All
-                let likesSport = []
-                for(let i =0;i<likesArry.length;i++){
-                    sportArry.forEach(element => {
-                        if(element.sid==likesArry[i]){
-                            likesSport.push(element)
-                        }
-                    });
-                }
-                return likesSport
+    computed: {
+        LikesData() {
+            let likesArry = this.$store.state.ucardData.Likes;
+            let sportArry = this.$store.state.runData.All;
+            let likesSport = [];
+            for (let i = 0; i < likesArry.length; i++) {
+                sportArry.forEach(element => {
+                    if (element.sid == likesArry[i]) {
+                        likesSport.push(element);
+                    }
+                });
             }
+            return likesSport;
         },
-        components: {
+    },
+    components: {
         Ucard,
     },
-    created(){
-        if (localStorage.getItem('user_data')) {
-            let i;
-            i = JSON.parse(localStorage.getItem('user_data')).uid;
-            let obj = {
-                userId: i,
-            };
-            this.$store.dispatch('ucardData/AllLikes', JSON.stringify(obj));
-        }
-    }
-}
+    created() {
+        const i = async () => {
+            if (localStorage.getItem('user_data')) {
+                let i;
+                i = JSON.parse(localStorage.getItem('user_data')).uid;
+                let obj = {
+                    userId: i,
+                };
+                await this.$store.dispatch('ucardData/AllLikes', JSON.stringify(obj));
+            }
+        };
+                    i()
+    },
+};
 </script>
 
 <style scoped>
@@ -66,16 +69,14 @@ export default {
     position: absolute;
     top: 4rem;
 }
-.ucard_layout{
+.ucard_layout {
     display: flex;
     margin-top: 1.25rem;
-    margin-left: .9375rem;
+    margin-left: 0.9375rem;
     flex-wrap: wrap;
-    
 }
-.ucard{
-    margin-left: .9375rem;
-
+.ucard {
+    margin-left: 0.9375rem;
 }
 .head_layout {
     position: relative;

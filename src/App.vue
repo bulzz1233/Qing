@@ -1,29 +1,20 @@
 <template>
     <div id="app">
-        <!-- class="animate__animated animate__zoomInDown animate__backOutLeft" -->
-        <home v-show="this.$route.path == '/'" />
-        <transition
-            appear
-            name="custom-classes-transition"
-            enter-active-class="animate__animated animate__fadeIn"
-            leave-active-class="animate__animated animate__fadeOut"
-        >
+        
+        
         <keep-alive>
-        <router-view class="mainpage"></router-view>
+        <router-view ></router-view>
         </keep-alive>
             
-        </transition>
+        
     </div>
 </template>
 
 <script>
-import home from './components/home';
-import 'animate.css';
 export default {
     name: 'App',
 
     components: {
-        home,
     },
 
 
@@ -43,7 +34,7 @@ body {
 }
 @media screen and (min-width: 320px) {
     html {
-        font-size: 5px;
+        font-size: 10px;
     }
 }
 @media screen and (min-width: 640px) {
