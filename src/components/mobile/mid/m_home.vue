@@ -15,9 +15,7 @@
                 <div class="line" id="line"></div>
             </ul>
         </div>
-        <div class="view_layout">
-            <router-view></router-view>
-        </div>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -32,6 +30,19 @@ export default {
     },
     methods: {
         goView(name) {
+            this.type_style(name)
+            if (this.$route.query.name == `${name}`) {
+                return;
+            } else {
+                this.$router.replace({
+                    name: 'view',
+                    query: {
+                        name: `${name}`,
+                    },
+                });
+            }
+        },
+        type_style(name) {
             let line = document.getElementById('line');
             console.log(name);
             switch (name) {
@@ -73,19 +84,12 @@ export default {
 
                     break;
             }
-            if (this.$route.path.includes(`${name}`)) {
-                return;
-            } else {
-                this.$router.replace({
-                    name: 'view',
-                    query: {
-                        name:`${name}`
-                    },
-                });
-            }
         },
     },
-    created() {},
+    mounted() {
+        let i = this.$route.query.name
+        this.type_style(i)
+    },
 };
 </script>
 <style scoped>
@@ -145,8 +149,5 @@ export default {
     left: 3.5vh;
     background: #232323;
     transition: all 0.2s;
-}
-.view_layout{
-    position: relative;
 }
 </style>

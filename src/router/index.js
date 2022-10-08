@@ -1,9 +1,8 @@
 import VueRouter from 'vue-router';
-const dev=/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
+const dev = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 const redirectPath = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
-    ? '/m_mainPage/m_home'
+    ? '/m_mainPage/m_home/view?name=全部'
     : 'mainpage';
-
 
 const router = new VueRouter({
     routes: [
@@ -13,39 +12,52 @@ const router = new VueRouter({
             redirect: redirectPath,
         },
         //动态加载组件，以箭头函数形式
+
         {
             path: '/m_mainPage',
             name: 'm_mainPage',
             meta: { type: 'mobile' },
             component: () => import('../components/mobile/m_mainPage.vue'),
-            children:[
+            children: [
                 {
-                    path:'m_user',
-                    name:'m_user',
-                    meta:{title:'我的',type:'mobile'},
-                    component:()=>import('../components/mobile/mid/m_user')
+                    path: 'login',
+                    name: 'm_login',
+                    meta: { type: 'mobile' },
+                    components: { login:() => import('@/pages/mobile/m_login')},
                 },
                 {
-                    path:'m_home',
-                    name:'m_home',
-                    meta:{title:'主页',type:'mobile'},
-                    component:()=>import('../components/mobile/mid/m_home'),
-                    children:[
+                    path:'register',
+                    name:'m_register',
+                    meta: { type: 'mobile' },
+                    components: { login:() => import('@/pages/mobile/m_register.vue')},
+                },
+                {
+                    path: 'm_user',
+                    name: 'm_user',
+                    meta: { title: '我的', type: 'mobile' },
+                    component: () => import('../components/mobile/mid/m_user'),
+                },
+                {
+                    path: 'm_home',
+                    name: 'm_home',
+                    meta: { title: '主页', type: 'mobile' },
+                    component: () => import('../components/mobile/mid/m_home'),
+                    children: [
                         {
-                            path:'view',
-                            name:'view',
-                            meta:{title:'我的',type:'mobile'},
-                            component:()=>import('../pages/mobile/card_view')
-                        }
-                    ]
+                            path: 'view',
+                            name: 'view',
+                            meta: {  type: 'mobile' },
+                            component: () => import('../pages/mobile/card_view'),
+                        },
+                    ],
                 },
                 {
-                    path:'m_calendar',
-                    name:'m_calendar',
-                    meta:{title:'日历',type:'mobile'},
-                    component:()=>import('../components/mobile/mid/m_calendar.vue')
-                }
-            ]
+                    path: 'm_calendar',
+                    name: 'm_calendar',
+                    meta: { title: '日历', type: 'mobile' },
+                    component: () => import('../components/mobile/mid/m_calendar.vue'),
+                },
+            ],
         },
         {
             path: '/mainpage',
@@ -151,6 +163,8 @@ const router = new VueRouter({
                                 {
                                     path: 'study',
                                     name: 'sstudy',
+                                    meta: { type: 'pc' },
+
                                     component: () => import('../pages/study.vue'),
                                 },
                             ],
@@ -216,14 +230,14 @@ router.beforeEach((to, from, next) => {
     if (from.name != 'login' && to.name == 'register') {
         next({ name: 'login' });
     } else next();
-    if(dev&&to.meta.type!=='mobile'){
-        next({name:'re'})
+    if (dev && to.meta.type !== 'mobile') {
+        next({ name: 're' });
     }
-    if(!dev&&to.meta.type!=='pc'){
-        next({name:'re'})
+    if (!dev && to.meta.type !== 'pc') {
+        next({ name: 're' });
     }
-    if(to.name=='m_mainPage'){
-        next({name:'re'})
+    if (to.name == 'm_mainPage') {
+        next({ name: 're' });
     }
 });
 // 后置路由守卫

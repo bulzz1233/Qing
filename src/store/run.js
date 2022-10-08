@@ -6,7 +6,6 @@ export default {
     //拓展下面的数据
     actions: {
         SearchByFit(context, value) {
-
             $api.searchByFit.searchByFit(value).then(
                 result => {
                     context.commit('addYoung', result.data);
@@ -16,22 +15,23 @@ export default {
                 }
             );
         },
-        AllSport(context, value){
+        AllSport(context, value) {
             $api.allsport.allsport(value).then(
-
                 result => {
-                    console.log(result.data)
-                    context.commit('addType', result.data);
-                    context.commit('allData', result.data);
+                    console.log(result.data);
+                    const i = async () => {
+                        await context.commit('addType', result.data);
+                        await context.commit('allData', result.data);
+                    };
+                    i()
                 },
                 error => {
                     console.log(error.message);
                 }
-            )
-        }
+            );
+        },
     },
     mutations: {
-        
         addYoung(state, obj) {
             obj.forEach(element => {
                 if (element.sportFit.includes('young')) {
@@ -45,48 +45,48 @@ export default {
                 }
             });
         },
-        addType(state,obj) {
+        addType(state, obj) {
             obj.forEach(element => {
-                if (element.sportType.indexOf('run')!=-1) {
+                if (element.sportType.indexOf('run') != -1) {
                     state.Run.push(element);
                 }
-                if (element.sportType.indexOf('swim')!=-1) {
+                if (element.sportType.indexOf('swim') != -1) {
                     state.Swim.push(element);
                 }
-                if (element.sportType.indexOf('football')!=-1) {
+                if (element.sportType.indexOf('football') != -1) {
                     state.Football.push(element);
                 }
-                if (element.sportType.indexOf('ride')!=-1) {
+                if (element.sportType.indexOf('ride') != -1) {
                     state.Ride.push(element);
                 }
-                if (element.sportType.indexOf('basketball')!=-1) {
+                if (element.sportType.indexOf('basketball') != -1) {
                     state.Basketball.push(element);
                 }
-                if (element.sportType.indexOf('yoga')!=-1) {
+                if (element.sportType.indexOf('yoga') != -1) {
                     state.Yoga.push(element);
                 }
-                if (element.sportType.indexOf('walk')!=-1) {
+                if (element.sportType.indexOf('walk') != -1) {
                     state.Walk.push(element);
                 }
             });
         },
-        allData(state,obj){
-            obj.forEach(element=>{
-                state.All.push(element)
-            })
-        }
+        allData(state, obj) {
+            obj.forEach(element => {
+                state.All.push(element);
+            });
+        },
     },
     state: {
-        All:[],
+        All: [],
         Young: [],
         Mid: [],
         Old: [],
-        Run:[],
-        Swim:[],
-        Football:[],
-        Ride:[],
-        Basketball:[],
-        Yoga:[],
-        Walk:[],
+        Run: [],
+        Swim: [],
+        Football: [],
+        Ride: [],
+        Basketball: [],
+        Yoga: [],
+        Walk: [],
     },
 };

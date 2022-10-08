@@ -1,7 +1,7 @@
 <template>
     <div>
         <top-bar />
-        <div class="view_layout">
+        <div class="view_layout" v-show="view_show" >
         
                 <router-view></router-view>
         </div>
@@ -27,9 +27,17 @@ import topBar from '../mobile/top/topBar.vue';
 export default {
     name: 'm_mainPage',
     data() {
-        return {};
+        return {
+        };
     },
     computed: {
+        view_show(){
+            if(this.$route.path.includes('login')||this.$route.path.includes('register')){
+                return false
+            }else{
+                return true
+            }
+        },
         light1() {
             if (this.$route.path.includes('m_home')) {
                 return 'light';
@@ -58,7 +66,25 @@ export default {
             }
         },
     },
-    created() {},
+    created() {
+        if (localStorage.getItem('user_data')) {
+            let i;
+            i = JSON.parse(localStorage.getItem('user_data')).uid;
+            this.uid = i;
+            let obj = {
+                userId: i,
+            };
+            const l = async () => {
+                await this.$store.dispatch('ucardData/AllLikes', JSON.stringify(obj));
+            };
+            l()
+        }
+
+        const k = async () => {
+            await this.$store.dispatch('runData/AllSport');
+        };
+        k();
+    },
     components: {
         topBar,
     },
@@ -95,5 +121,6 @@ export default {
     height: calc(87vh);
     top: 6vh;
     width: 100%;
+    z-index: 1;
 }
 </style>

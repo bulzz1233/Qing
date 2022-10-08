@@ -109,10 +109,10 @@ export default {
         };
     },
     methods: {
-         submitForm(formName) {
+        submitForm(formName) {
             this.$refs[formName].validate(valid => {
                 if (valid) {
-                     this.$store.dispatch('userData/ToRegister', JSON.stringify(this.ruleForm));
+                    this.$store.dispatch('userData/ToRegister', JSON.stringify(this.ruleForm));
                 } else {
                     console.log('error submit!!');
                     return false;

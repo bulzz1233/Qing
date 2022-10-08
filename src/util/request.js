@@ -4,7 +4,7 @@ import qs from 'qs'
 axios.defaults.headers["Content-Type"]="application/json"
 const request = axios.create({
     baseURL: '/api',
-    timeout: 10000,
+    timeout: 6000,
 });
 //请求拦截器
 request.interceptors.request.use((config)=>{
@@ -34,6 +34,7 @@ request.interceptors.response.use(resultWrapper=>{
         }
         
     }
+    
 },
 error=>{
     console.log("请求发送失败",error)

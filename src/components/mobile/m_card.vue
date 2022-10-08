@@ -4,7 +4,7 @@
             <li class="box">
                 <router-link
                     replace
-                    :to="`${thePath}details?detail=${JSON.stringify(o)}`"
+                    :to="`details?detail=${JSON.stringify(o)}`"
                     class="img"
                 >
                     <img v-lazyload="o.sportPic" src="" width="100%" height="100%" />
@@ -12,7 +12,7 @@
                 <div class="detail">
                     <router-link
                         replace
-                        :to="`${thePath}details?detail=${JSON.stringify(o)}`"
+                        :to="`details?detail=${JSON.stringify(o)}`"
                         class="title"
                     >
                         {{ o.sportName }}
@@ -37,7 +37,7 @@
 
                         <router-link
                             replace
-                            :to="`${thePath}addCalendar?detail=${JSON.stringify(o)}`"
+                            :to="`detail=${JSON.stringify(o)}`"
                             class="el-icon-circle-plus-outline icon add_plan"
                         ></router-link>
                     </div>
@@ -51,25 +51,12 @@
 import { Loading } from 'element-ui';
 
 export default {
-    name: 'Ucard',
+    name:'mcard',
     data() {
-        return {
-        };
-    },
-    computed: {
-        thePath() {
-            if (this.$route.path.indexOf('searchResult') != -1) {
-                return '/mainpage/searchResult/';
-            }
-            if (this.$route.path.indexOf('Likes') != -1) {
-                return '/mainpage/Likes/';
-            } else {
-                return '/mainpage/';
-            }
-        },
+        return {};
     },
     methods: {
-        //收藏功能
+         //收藏功能
         UserStar(o, index) {
             let obj = {
                 userId : this.uid,
@@ -100,7 +87,7 @@ export default {
             }, time);
         },
     },
-    mounted(){
+    mounted() {
         this.$nextTick( async ()=>{
             if (localStorage.getItem('user_data')) {
             let i;
@@ -118,36 +105,29 @@ export default {
                 this.$set(this.o, 'sportStar',1 );
             };
         }
-
     },
     props: ['o','uid','title'],
-
 };
 </script>
-
 <style scoped>
 .box {
     display: flex;
-    height: 12.5rem;
-    width: 11.25rem;
-    max-height: 200px;
-    max-width: 250px;
+    height: 16vh;
+    width: 20vh;
     position: relative;
-    min-height: 150px;
-    min-width: 185px;
     flex-direction: column;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 .img {
-    width: 120%;
-    height: 130%;
-    border-radius: 10px;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
 }
 .detail {
     line-height: 25px;
     width: 100%;
-    margin-top: 5px;
+    font-size: 1.5vh;
+    /* margin-top: 5px; */
 }
 .detail a {
     color: rgb(94, 90, 90);
@@ -158,15 +138,24 @@ export default {
     white-space: nowrap;
     overflow: hidden;
     display: block;
+    margin-top: 0.3vh;
+    margin-bottom: 0.3vh;
     text-overflow: ellipsis;
     transition: all 0.2s;
+    padding: 0px 1vh 0px 1vh;
+
 }
 .icon {
-    font-size: 18px;
+    font-size: 1.8vh;
     transition: all 0.2s;
 }
 .card {
+    width: 20vh;
     position: relative;
+    box-sizing: border-box;
+    border-radius: 5px;
+    overflow:hidden ;
+    box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.2) ;
 }
 .add_plan {
     /* margin-left: 3.125rem; */
@@ -176,15 +165,16 @@ export default {
     position: relative;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 5px;
+    padding: 0px 1vh 0px 1vh;
+    
 }
 
 .card_layout {
     /* position: absolute; */
-    margin: 0;
+    padding:0;
+    margin-top:0;
 }
 img {
-    border-radius: 10px;
     z-index: -1;
     transition: all 0.5s;
 }
@@ -196,5 +186,4 @@ img {
 }
 img:hover {
     transform: scale(1.5, 1.5);
-}
-</style>
+}</style>
