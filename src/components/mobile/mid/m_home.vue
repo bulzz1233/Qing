@@ -28,9 +28,12 @@ export default {
             head_list: ['全部', '篮球', '跑步', '瑜伽', '游泳', '足球', '骑行', '行走', '更多'],
         };
     },
+    computed:{
+        
+    },
     methods: {
         goView(name) {
-            this.type_style(name)
+            this.type_style(name);
             if (this.$route.query.name == `${name}`) {
                 return;
             } else {
@@ -86,9 +89,9 @@ export default {
             }
         },
     },
-    mounted() {
-        let i = this.$route.query.name
-        this.type_style(i)
+    activated() {
+        let i = this.$route.query.name;
+        this.type_style(i);
     },
 };
 </script>

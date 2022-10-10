@@ -3,7 +3,9 @@
         <top-bar />
         <div class="view_layout" v-show="view_show" >
         <transition name="fade1">
+            <keep-alive>
                 <router-view :key="$route.name" ></router-view>
+            </keep-alive>
         </transition>
         </div>
         <div class="bottom">

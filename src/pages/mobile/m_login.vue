@@ -1,7 +1,7 @@
 <template>
     <div class="layout">
         <div class="title_layout">
-            <div class="el-icon-arrow-left icon close" @click="$router.go(-1)"></div>
+            <div class="el-icon-arrow-left icon close" @click="$router.back()"></div>
         </div>
         <div class="all_layout">
             <div class="title">登&nbsp;&nbsp;&nbsp;录</div>
