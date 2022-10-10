@@ -12,8 +12,8 @@
             <li class="ucard_layout">
                 <morecard
                     class="ucard"
-                    v-for="(o, index) in more_data"
-                    :key="index"
+                    v-for="o in more_data"
+                    :key="o.sid"
                     :o="o"
                     :title="$route.query.title"
                     :uid="uid"

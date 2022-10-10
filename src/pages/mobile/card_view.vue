@@ -3,12 +3,13 @@
         <mcard
             class="card"
             v-for="o in type_data"
-            :key="o"
+            :key="o.sid"
             :o="o"
-            :title="$route.query.title"
-            :uid="uid"
+            :type_name="type_name"
+            :addPlan_router='addPlan_router'
+            :player_router='player_router'
         />
-        <router-view name="m_addPlan"></router-view>
+            <router-view name="m_addPlan"></router-view>
     </div>
 </template>
 
@@ -17,11 +18,15 @@ import mcard from '@/components/mobile/m_card.vue';
 export default {
     name: 'card_view',
     data() {
-        return {};
+        return {
+            
+            addPlan_router:'m_addPlan',
+            player_router:'m_player'
+        };
     },
     computed: {
-        uid() {
-            return JSON.parse(localStorage.getItem('user_data')).uid;
+        type_name(){
+            return this.$route.query.name
         },
         type_data() {
             let arr = [];
@@ -77,11 +82,12 @@ export default {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    overflow-y: scroll;
+    overflow: scroll;
     justify-content: space-around;
     align-items: center;
 }
 .card {
     margin-top: 1vh;
 }
+
 </style>

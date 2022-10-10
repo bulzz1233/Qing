@@ -176,12 +176,14 @@ export default {
     position: relative;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 5px;
+    margin-bottom:.625rem ;
+
 }
 
 .card_layout {
     /* position: absolute; */
     margin: 0;
+
 }
 img {
     border-radius: 10px;

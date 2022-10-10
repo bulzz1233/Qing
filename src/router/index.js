@@ -1,7 +1,7 @@
 import VueRouter from 'vue-router';
 const dev = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 const redirectPath = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)
-    ? '/m_mainPage/m_home/view?name=全部'
+    ? '/m_mainPage/m_home'
     : 'mainpage';
 
 const router = new VueRouter({
@@ -23,13 +23,37 @@ const router = new VueRouter({
                     path: 'login',
                     name: 'm_login',
                     meta: { type: 'mobile' },
-                    components: { login:() => import('@/pages/mobile/m_login')},
+                    components: { login: () => import('@/pages/mobile/m_login') },
                 },
                 {
-                    path:'register',
-                    name:'m_register',
+                    path: 'register',
+                    name: 'm_register',
                     meta: { type: 'mobile' },
-                    components: { login:() => import('@/pages/mobile/m_register.vue')},
+                    components: { login: () => import('@/pages/mobile/m_register.vue') },
+                },
+                {
+                    path: 'common',
+                    name: 'common',
+                    meta: { type: 'mobile' },
+                    components: { login: () => import('../pages/mobile/m_common.vue') },
+                    children: [
+                        {
+                            path: 'addPlan',
+                            name: 'm_laddPlan',
+                            meta: { type: 'mobile' },
+                            components: {
+                                common: () => import('@/components/mobile/m_addPlan.vue'),
+                            },
+                        },
+                        {
+                            path: 'player',
+                            name: 'm_lplayer',
+                            meta: { type: 'mobile' },
+                            components: {
+                                common: () => import('@/components/mobile/m_player.vue'),
+                            },
+                        },
+                    ],
                 },
                 {
                     path: 'm_user',
@@ -41,13 +65,35 @@ const router = new VueRouter({
                     path: 'm_home',
                     name: 'm_home',
                     meta: { title: '主页', type: 'mobile' },
+                    redirect: () => {
+                        return { name: 'view', query: { name: '全部' } };
+                    },
                     component: () => import('../components/mobile/mid/m_home'),
                     children: [
                         {
                             path: 'view',
                             name: 'view',
-                            meta: {  type: 'mobile' },
+                            meta: { type: 'mobile' },
                             component: () => import('../pages/mobile/card_view'),
+                            children: [
+                                {
+                                    path: 'addPlan',
+                                    name: 'm_addPlan',
+                                    meta: { type: 'mobile' },
+                                    components: {
+                                        m_addPlan: () =>
+                                            import('@/components/mobile/m_addPlan.vue'),
+                                    },
+                                },
+                                {
+                                    path: 'player',
+                                    name: 'm_player',
+                                    meta: { type: 'mobile' },
+                                    components: {
+                                        m_addPlan: () => import('@/components/mobile/m_player.vue'),
+                                    },
+                                },
+                            ],
                         },
                     ],
                 },
@@ -215,18 +261,27 @@ router.beforeEach((to, from, next) => {
     if (
         to.name != 'login' &&
         to.name != 'mainpage' &&
-        window.location.hash == '/' &&
+        to.name != 're' &&
         to.name != 'register' &&
+        to.name != 'm_login' &&
+        to.name != 'm_register' &&
+        to.name != 'm_calendar' &&
+        to.name != 'm_user' &&
+        to.name != 'view' &&
         !token
     ) {
         next({ name: 'login' });
     } else next();
-    if ((token && to.name == 'login') || (from.name == 'login' && to.name == 'login')) {
-        next({ name: 'mainpage' });
+    if (
+        (token && to.name == 'register') ||
+        (token && to.name == 'login') ||
+        (from.name == 'login' && to.name == 'login') ||
+        (token && to.name == 'm_login') ||
+        (from.name == 'm_login' && to.name == 'm_login')
+    ) {
+        next({ name: 're' });
     } else next();
-    if (token && to.name == 'register') {
-        next({ name: 'mainpage' });
-    } else next();
+
     if (from.name != 'login' && to.name == 'register') {
         next({ name: 'login' });
     } else next();
@@ -236,7 +291,7 @@ router.beforeEach((to, from, next) => {
     if (!dev && to.meta.type !== 'pc') {
         next({ name: 're' });
     }
-    if (to.name == 'm_mainPage') {
+    if (to.name == 'm_mainPage' || to.name == 'm_home') {
         next({ name: 're' });
     }
 });

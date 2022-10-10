@@ -104,6 +104,7 @@ export default {
     position: relative;
     height: 100%;
     width: 100%;
+    z-index: -1;
 }
 
 .img1 {

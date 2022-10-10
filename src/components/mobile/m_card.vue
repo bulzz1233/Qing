@@ -2,21 +2,13 @@
     <div class="card">
         <ul class="card_layout">
             <li class="box">
-                <router-link
-                    replace
-                    :to="`details?detail=${JSON.stringify(o)}`"
-                    class="img"
-                >
+                <div @click="goPlayer(o.sportVideo)" class="img">
                     <img v-lazyload="o.sportPic" src="" width="100%" height="100%" />
-                </router-link>
+                </div>
                 <div class="detail">
-                    <router-link
-                        replace
-                        :to="`details?detail=${JSON.stringify(o)}`"
-                        class="title"
-                    >
+                    <div @click="goPlayer(o.sportVideo)" class="title">
                         {{ o.sportName }}
-                    </router-link>
+                    </div>
                     <div class="icon_layout">
                         <a
                             href="#"
@@ -35,11 +27,10 @@
                             <span>{{ o.sportLikes }}</span>
                         </a>
 
-                        <router-link
-                            replace
-                            :to="`detail=${JSON.stringify(o)}`"
+                        <div
+                            @click="goAdd(o)"
                             class="el-icon-circle-plus-outline icon add_plan"
-                        ></router-link>
+                        ></div>
                     </div>
                 </div>
             </li>
@@ -51,17 +42,19 @@
 import { Loading } from 'element-ui';
 
 export default {
-    name:'mcard',
+    name: 'mcard',
     data() {
-        return {};
+        return {
+            uid: '',
+        };
     },
     methods: {
-         //收藏功能
+        //收藏功能
         UserStar(o, index) {
             let obj = {
-                userId : this.uid,
-                sid:o.sid
-            }
+                userId: this.uid,
+                sid: o.sid,
+            };
             this.$store.dispatch('ucardData/UserLikes', JSON.stringify(obj));
 
             this.$set(o, 'sportStar', !o.sportStar);
@@ -86,41 +79,52 @@ export default {
                 // });
             }, time);
         },
+        goAdd(o) {
+            this.$router.push({
+                name: this.addPlan_router,
+                query: { name: this.type_name, detail: JSON.stringify(o) },
+            });
+        },
+        goPlayer(k) {
+            this.$router.push({
+                name: this.player_router,
+                query: {  name: this.type_name,link:JSON.stringify(k) },
+            });
+        },
     },
     mounted() {
-        this.$nextTick( async ()=>{
+        this.$nextTick(async () => {
             if (localStorage.getItem('user_data')) {
-            let i;
-            i = JSON.parse(localStorage.getItem('user_data')).uid;
-            let obj = {
-                userId: i,
-            };
-            await this.$store.dispatch('ucardData/AllLikes', JSON.stringify(obj));
-        }
-        })
-        let arr=this.$store.state.ucardData.Likes
-        for(let i = 0; i<arr.length;i++){
-        
-                if(this.o.sid==arr[i]){
-                this.$set(this.o, 'sportStar',1 );
-            };
+                let i;
+                i = JSON.parse(localStorage.getItem('user_data')).uid;
+                this.uid = i;
+                let obj = {
+                    userId: i,
+                };
+                await this.$store.dispatch('ucardData/AllLikes', JSON.stringify(obj));
+            }
+        });
+        let arr = this.$store.state.ucardData.Likes;
+        for (let i = 0; i < arr.length; i++) {
+            if (this.o.sid == arr[i]) {
+                this.$set(this.o, 'sportStar', 1);
+            }
         }
     },
-    props: ['o','uid','title'],
+    props: ['o', 'type_name', 'player_router','addPlan_router'],
 };
 </script>
 <style scoped>
 .box {
     display: flex;
-    height: 16vh;
-    width: 20vh;
+    height: 35vw;
+    width: 45vw;
     position: relative;
     flex-direction: column;
     border-radius: 5px;
 }
 .img {
-    width: 100%;
-    height: 100%;
+    aspect-ratio: 16/9;
     overflow: hidden;
 }
 .detail {
@@ -143,36 +147,35 @@ export default {
     text-overflow: ellipsis;
     transition: all 0.2s;
     padding: 0px 1vh 0px 1vh;
-
 }
 .icon {
-    font-size: 1.8vh;
+    font-size: 4vw;
     transition: all 0.2s;
 }
 .card {
-    width: 20vh;
+    height: 36vw;
+    width: 45vw;
     position: relative;
     box-sizing: border-box;
     border-radius: 5px;
-    overflow:hidden ;
-    box-shadow: 0px 0px 10px -2px rgba(0,0,0,0.2) ;
+    overflow: hidden;
+    box-shadow: 0px 0px 10px -2px rgba(0, 0, 0, 0.2);
 }
 .add_plan {
     /* margin-left: 3.125rem; */
-    font-size: 20px;
+    font-size: 4.5vw;
 }
 .icon_layout {
     position: relative;
     display: flex;
     justify-content: space-between;
     padding: 0px 1vh 0px 1vh;
-    
 }
 
 .card_layout {
     /* position: absolute; */
-    padding:0;
-    margin-top:0;
+    padding: 0;
+    margin-top: 0;
 }
 img {
     z-index: -1;
@@ -186,4 +189,5 @@ img {
 }
 img:hover {
     transform: scale(1.5, 1.5);
-}</style>
+}
+</style>

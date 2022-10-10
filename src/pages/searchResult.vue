@@ -1,6 +1,6 @@
 <template>
-      <div>
-          <router-view></router-view>
+    <div>
+        <router-view></router-view>
         <ul class="ul_layout">
             <li class="head_layout">
                 <div class="head">
@@ -10,7 +10,7 @@
                 <div class="none"></div>
             </li>
             <li class="ucard_layout">
-                <ucard class="ucard" v-for="(o, index) in searchData" :key="index" :o="o" />
+                <ucard class="ucard" v-for="o in searchData" :key="o.sid" :o="o" />
                 <div class="none"></div>
             </li>
         </ul>
@@ -21,16 +21,15 @@
 import Ucard from '../components/Ucard.vue';
 
 export default {
-        computed:{
-            searchData(){
-                return this.$store.state.headData.Tips_list
-            }
+    computed: {
+        searchData() {
+            return this.$store.state.headData.Tips_list;
         },
-        components: {
+    },
+    components: {
         Ucard,
     },
-    
-}
+};
 </script>
 
 <style scoped>
@@ -47,16 +46,14 @@ export default {
     position: absolute;
     top: 4rem;
 }
-.ucard_layout{
+.ucard_layout {
     display: flex;
     margin-top: 1.25rem;
-    margin-left: .9375rem;
+    margin-left: 0.9375rem;
     flex-wrap: wrap;
-    
 }
-.ucard{
-    margin-left: .9375rem;
-
+.ucard {
+    margin-left: 0.9375rem;
 }
 .head_layout {
     position: relative;

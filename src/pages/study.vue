@@ -10,7 +10,6 @@ export default {
     
     data() {
         return {
-            params: JSON.parse(this.$route.query.detail),
             videoOptions: {
                 autoplay: true,//自动播放
                 controls: true,//用户可以与之交互的控件

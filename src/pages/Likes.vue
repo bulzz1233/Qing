@@ -40,17 +40,14 @@ export default {
         Ucard,
     },
     created() {
-        const i = async () => {
-            if (localStorage.getItem('user_data')) {
-                let i;
-                i = JSON.parse(localStorage.getItem('user_data')).uid;
-                let obj = {
-                    userId: i,
-                };
-                await this.$store.dispatch('ucardData/AllLikes', JSON.stringify(obj));
-            }
-        };
-                    i()
+        if (localStorage.getItem('user_data')) {
+            let i;
+            i = JSON.parse(localStorage.getItem('user_data')).uid;
+            let obj = {
+                userId: i,
+            };
+            this.$store.dispatch('ucardData/AllLikes', JSON.stringify(obj));
+        }
     },
 };
 </script>

@@ -207,15 +207,6 @@ export default {
     display: flex;
     z-index: 5;
 }
-.box_layout {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 6;
-}
 .title {
     height: 3.75rem;
     width: 100%;
@@ -238,6 +229,24 @@ export default {
     color: #0f0f0f;
     z-index: 9;
 }
+.form_layout {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+.add_btn {
+    margin-right: 4.375rem;
+}
+    .box_layout {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 6;
+    }
 .background {
     background: #0f0f0f;
     width: 100%;
@@ -248,14 +257,5 @@ export default {
     align-items: center;
     opacity: 0.4;
     z-index: 2;
-}
-.form_layout {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
-}
-.add_btn {
-    margin-right: 4.375rem;
 }
 </style>

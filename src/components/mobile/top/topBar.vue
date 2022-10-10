@@ -2,9 +2,13 @@
     <div class="top_layout">
         <div class="box"></div>
         <div class="title">轻运动</div>
-        <div class="avatar" v-show="avatar_show"></div>
+        <div class="avatar" v-show="avatar_show">
+            <img class="head_portrait_img" src="@/assets/img/12.png" alt="" />
+        </div>
         <div class="tips" @click="gologin()" v-show="!avatar_show">登录</div>
-        <router-view name="login"></router-view>
+        <transition name="fade1">
+        <router-view :key="$route.name" name="login"></router-view>
+        </transition>
     </div>
 </template>
 
@@ -48,6 +52,11 @@ export default {
     justify-content: space-around;
     align-items: center;
 }
+.head_portrait_img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
 .title {
     font-size: 3vh;
     font-weight: bolder;
@@ -57,14 +66,24 @@ export default {
 .avatar {
     height: 5vh;
     width: 5vh;
-    background: white;
     border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    left: 4vw;
 }
 .box {
     height: 5vh;
     width: 5vh;
 }
 .tips {
-    font-size: 1vh;
+    font-size: 1.5vh;
+}
+.fade1-enter-active,
+.fade1-leave-active {
+    transition: all ease-in-out 1s;
+}
+.fade1-enter,
+.fade1-leave {
+    opacity: 0.5;
 }
 </style>

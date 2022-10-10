@@ -39,7 +39,11 @@ request.interceptors.response.use(resultWrapper=>{
 error=>{
     console.log("请求发送失败",error)
     Message.error("服务器")
-    return Promise.reject("服务器响应失败")
+    var originalRequest = error.config;
+    if(error.code == 'ECONNABORTED' && error.message.indexOf('timeout')!=-1 && !originalRequest._retry){
+            originalRequest._retry = true
+            return axios.request(originalRequest);
+    }
 })
 
     export default request;

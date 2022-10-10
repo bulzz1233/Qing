@@ -53,8 +53,8 @@
             <li class="ucard_layout">
                 <ucard
                     class="ucard"
-                    v-for="(o, index) in old_data"
-                    :key="index"
+                    v-for="o in old_data"
+                    :key="o.sid"
                     :o="o"
                     :uid="uid"
                 />
@@ -140,6 +140,7 @@ ul {
     flex-wrap: wrap;
     overflow: hidden;
     margin: 1.25rem;
+
 }
 .head_layout {
     background: white;

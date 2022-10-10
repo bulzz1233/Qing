@@ -12,6 +12,7 @@ export default {
                 result => {
                     //接收存储用户信息
                     console.log('添加成功');
+                    window.alert('添加成功')
                 },
                 error => {
                     console.log(error.message);
@@ -87,9 +88,11 @@ export default {
             state.Plan.push(obj);
         },
         AllPlan(state, obj) {
+            let arr = []
             obj.forEach(element => {
-                state.Plan.push(element);
+                arr.push(element);
             });
+            state.Plan = arr
         },
         DelPlan(state, obj) {
             state.Plan.forEach((item, index, array) => {

@@ -1,12 +1,13 @@
 <template>
-    <div>
+    <div class="main_layout" >
         <top-bar />
         <div class="view_layout" v-show="view_show" >
-        
-                <router-view></router-view>
+        <transition name="fade1">
+                <router-view :key="$route.name" ></router-view>
+        </transition>
         </div>
         <div class="bottom">
-            <div class="item" :class="light1" @click="trans('m_home')">
+            <div class="item" :class="light1" @click="trans('view')">
                 <div class="icon el-icon-house"></div>
                 <div>主页</div>
             </div>
@@ -32,7 +33,7 @@ export default {
     },
     computed: {
         view_show(){
-            if(this.$route.path.includes('login')||this.$route.path.includes('register')){
+            if(this.$route.path.includes('login')||this.$route.path.includes('register')||this.$route.path.includes('common')){
                 return false
             }else{
                 return true
@@ -62,6 +63,9 @@ export default {
             } else {
                 this.$router.replace({
                     name: `${name}`,
+                    query:{
+                        name:'全部'
+                    }
                 });
             }
         },
@@ -122,5 +126,16 @@ export default {
     top: 6vh;
     width: 100%;
     z-index: 1;
+}
+.main_layout{
+    overflow-x:hidden ;
+}
+.fade1-enter-active,
+.fade1-leave-active {
+    transition: all ease-in-out 0.2s;
+}
+.fade1-enter,
+.fade1-leave {
+    opacity: 0.5;
 }
 </style>

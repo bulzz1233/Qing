@@ -1,12 +1,14 @@
 <template>
     <div class="list_layout">
-        <el-collapse class="date"   accordion>
-            <el-collapse-item   v-for="(t, index) in planDateArry" :key="index" :name="index" >
+        <el-collapse class="date" accordion>
+            <el-collapse-item v-for="(t, index) in planDateArry" :key="index" :name="index">
                 <template slot="title">
                     <div @click="show_plan(t)" class="date_style">{{ t }}</div>
                 </template>
                 <ul>
-                    <li class="text" v-for="(v,index) in thisList" :key="index">{{v.sportName}}</li>
+                    <li class="text" v-for="(v, index) in thisList" :key="index">
+                        {{ v.sportName }}
+                    </li>
                 </ul>
             </el-collapse-item>
         </el-collapse>
@@ -18,7 +20,6 @@ export default {
     name: 'planList',
     data() {
         return {
-            planDateArry: '',
             thisList: [],
         };
     },
@@ -26,33 +27,7 @@ export default {
         list_data() {
             return this.$store.state.calendarData.Plan;
         },
-    },
-    methods: {
-        show_plan(t) {
-                let newArry = []
-                this.$store.state.calendarData.Plan.forEach(element => {
-                    if (element.planDate.indexOf(t) != -1) {
-                        newArry.push(element)
-                    }
-                });
-                this.thisList = newArry
-            
-        },
-    },
-    beforeCreate() {
-        const i = async ()=>{
-            if (this.$store.state.calendarData.Plan == null) {
-            let i = JSON.parse(localStorage.getItem('user_data')).uid;
-            let planobj = {
-                uid: i,
-            };
-            await this.$store.dispatch('calendarData/AllPlan', JSON.stringify(planobj));
-        }
-        }
-        
-    },
-    mounted() {
-        this.$nextTick(() => {
+        planDateArry() {
             let dateArry = [];
             let newDateArry = [];
             this.$store.state.calendarData.Plan.forEach(element => {
@@ -63,16 +38,29 @@ export default {
                     newDateArry.push(dateArry[i]);
                 }
             }
-            this.planDateArry = newDateArry;
-            // let list = [];
-            // for (let i = 0; i < newDateArry.length; i++) {
-            //     this.$store.state.calendarData.Plan.forEach(element => {
-            //         if (element.planDate.indexOf(newDateArry[i]) != -1) {
-            //             list;
-            //         }
-            //     });
-            // }
-        });
+            return newDateArry;
+        },
+    },
+    methods: {
+        show_plan(t) {
+            let newArry = [];
+            this.$store.state.calendarData.Plan.forEach(element => {
+                if (element.planDate.indexOf(t) != -1) {
+                    newArry.push(element);
+                }
+            });
+            this.thisList = newArry;
+        },
+    },
+
+    mounted() {
+        if (localStorage.getItem('token') != null) {
+            let i = JSON.parse(localStorage.getItem('user_data')).uid;
+            let planobj = {
+                uid: i,
+            };
+            this.$store.dispatch('calendarData/AllPlan', JSON.stringify(planobj));
+        }
     },
 };
 </script>
@@ -90,7 +78,7 @@ export default {
     font-family: zhongwen1;
     width: 100%;
 }
-.text{
+.text {
     font-size: 1rem;
 }
 </style>
