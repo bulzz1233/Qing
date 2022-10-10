@@ -1,7 +1,7 @@
 # qing
-此项目为前后端分离项目
-在线地址：http://120.25.148.63/
-配合服务端使用， 服务端地址：https://github.com/bulzz1233/Qing-Server
++在线地址：http://120.25.148.63/
++此项目为前后端分离项目
++配合服务端使用， 服务端地址：https://github.com/bulzz1233/Qing-Server
 
 ## 系统实现的功能
 
