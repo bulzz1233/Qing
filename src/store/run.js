@@ -71,9 +71,11 @@ export default {
             });
         },
         allData(state, obj) {
+            let arr=[]
             obj.forEach(element => {
-                state.All.push(element);
+                arr.push(element);
             });
+            state.All=arr
         },
     },
     state: {
