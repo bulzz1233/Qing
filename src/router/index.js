@@ -270,7 +270,12 @@ router.beforeEach((to, from, next) => {
         to.name != 'view' &&
         !token
     ) {
-        next({ name: 'login' });
+        if (from.meta.type == 'pc') {
+            next({ name: 'login' });
+        }
+        if (from.meta.type == 'mobile') {
+            next({ name: 'm_login' });
+        }
     } else next();
     if (
         (token && to.name == 'register') ||
